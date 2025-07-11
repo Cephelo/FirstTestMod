@@ -1,4 +1,4 @@
-package dev.cephelo.firstmod;
+package dev.cephelo.musicbox;
 
 import java.util.List;
 

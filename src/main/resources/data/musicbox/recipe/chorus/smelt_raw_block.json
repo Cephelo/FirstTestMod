@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:smelting",
+  "category": "misc",
+  "cookingtime": 1600,
+  "experience": 20.0,
+  "ingredient": {
+  	"item": "musicbox:raw_chorus_block"
+  },
+  "result": {
+  	"id": "musicbox:chorus_block"
+  }
+}

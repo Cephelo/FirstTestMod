@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "#": {
+  	  "item": "musicbox:raw_chorus"
+  	}
+  },
+  "pattern": [
+    "###",
+    "###",
+    "###"
+  ],
+  "result": {
+    "id": "musicbox:raw_chorus_block"
+  },
+  "show_notification": true
+}

@@ -1,0 +1,6 @@
+{
+  "type": "neoforge:add_features",
+  "biomes": ["minecraft:the_end", "minecraft:end_midlands", "minecraft:end_highlands"],
+  "features": "musicbox:p_chorus_ore",
+  "step": "top_layer_modification"
+}

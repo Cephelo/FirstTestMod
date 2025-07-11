@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "chorus_ingot",
+  "key": {
+    "#": {
+  	  "item": "musicbox:chorus_nugget"
+  	}
+  },
+  "pattern": [
+    "###",
+    "###",
+    "###"
+  ],
+  "result": {
+    "id": "musicbox:chorus_ingot"
+  },
+  "show_notification": true
+}

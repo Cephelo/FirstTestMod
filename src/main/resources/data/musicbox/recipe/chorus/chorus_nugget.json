@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+  	  "item": "musicbox:chorus_ingot"
+  	}
+  ],
+  "result": {
+    "count": 9,
+    "id": "musicbox:chorus_nugget"
+  }
+}

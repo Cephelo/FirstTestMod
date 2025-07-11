@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "musicbox:chorus_block",
+    "musicbox:raw_chorus_block",
+    "musicbox:chorus_ore",
+    "musicbox:echo_pedestal"
+  ]
+}

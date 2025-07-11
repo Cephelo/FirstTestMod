@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:smelting",
+  "category": "misc",
+  "cookingtime": 200,
+  "experience": 2.0,
+  "group": "chorus_ingot",
+  "ingredient": {
+  	"item": "musicbox:raw_chorus"
+  },
+  "result": {
+  	"id": "musicbox:chorus_ingot"
+  }
+}

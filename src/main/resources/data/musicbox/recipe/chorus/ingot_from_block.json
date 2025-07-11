@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "chorus_ingot",
+  "ingredients": [
+    {
+  	  "item": "musicbox:chorus_block"
+  	}
+  ],
+  "result": {
+    "count": 9,
+    "id": "musicbox:chorus_ingot"
+  }
+}

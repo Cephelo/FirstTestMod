@@ -1,0 +1,13 @@
+{
+  "block.musicbox.musicbox": "Music Box",
+  "block.musicbox.echo_pedestal": "Echo Pedestal",
+  "block.musicbox.chorus_ore": "Murichorum Ore",
+  "block.musicbox.chorus_block": "Murichorum Block",
+  "block.musicbox.raw_chorus_block": "Raw Murichorum Block",
+  "item.musicbox.chorus_ingot": "Murichorum Ingot",
+  "item.musicbox.chorus_nugget": "Murichorum Nugget",
+  "item.musicbox.raw_chorus": "Raw Murichorum",
+  "item.musicbox.old_parchment": "Old Parchment",
+  "item.musicbox.disclet": "Disclet",
+  "trim_materal.musicbox.chorus": "Murichorum"
+}

@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+  	  "item": "musicbox:raw_chorus_block"
+  	}
+  ],
+  "result": {
+    "count": 9,
+    "id": "musicbox:raw_chorus"
+  }
+}
