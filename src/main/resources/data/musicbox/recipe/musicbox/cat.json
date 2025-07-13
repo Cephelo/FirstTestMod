@@ -1,0 +1,23 @@
+{
+  "type": "musicbox:musicbox",
+  "ingredients": [
+    {
+      "item": "minecraft:string"
+    },
+    {
+      "item": "minecraft:phantom_membrane"
+    },
+    {
+      "item": "musicbox:chorus_ingot"
+    },
+    {
+      "item": "minecraft:redstone"
+    }
+  ],
+  "result": {
+    "id": "minecraft:music_disc_cat"
+  },
+  "soundEvent": "music_disc.cat",
+  "enablePreivew": true,
+  "autoCreateEchoRecipe": true
+}

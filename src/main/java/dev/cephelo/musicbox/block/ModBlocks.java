@@ -1,6 +1,7 @@
 package dev.cephelo.musicbox.block;
 
 import dev.cephelo.musicbox.MusicBoxMod;
+import dev.cephelo.musicbox.block.custom.MusicboxBlock;
 import dev.cephelo.musicbox.block.custom.PedestalBlock;
 import dev.cephelo.musicbox.item.ModItems;
 import net.minecraft.world.item.BlockItem;
@@ -42,6 +43,13 @@ public class ModBlocks {
                     .strength(3f, 4f)
                     .requiresCorrectToolForDrops()
     ));
+
+    public static final DeferredBlock<Block> MUSICBOX = registerBlock("musicbox",
+            () -> new MusicboxBlock(BlockBehaviour.Properties.of()
+                    .noOcclusion()
+                    .sound(SoundType.BAMBOO_WOOD)
+                    .strength(3f, 4f)
+            ));
 
 
     private static <T extends Block> DeferredBlock<T> registerBlock(String name, Supplier<T> block) {

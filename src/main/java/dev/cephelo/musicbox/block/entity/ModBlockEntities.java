@@ -17,6 +17,10 @@ public class ModBlockEntities {
             BLOCK_ENTITIES.register("pedestal_be", () -> BlockEntityType.Builder.of(
                     PedestalBlockEntity::new, ModBlocks.ECHO_PEDESTAL.get()).build(null));
 
+    public  static final Supplier<BlockEntityType<MusicboxBlockEntity>> MUSICBOX_BE =
+            BLOCK_ENTITIES.register("musicbox_be", () -> BlockEntityType.Builder.of(
+                    MusicboxBlockEntity::new, ModBlocks.MUSICBOX.get()).build(null));
+
     public static void register(IEventBus eventBus) {
         BLOCK_ENTITIES.register(eventBus);
     }
