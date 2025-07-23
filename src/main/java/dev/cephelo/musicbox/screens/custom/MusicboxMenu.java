@@ -1,7 +1,9 @@
 package dev.cephelo.musicbox.screens.custom;
 
+import dev.cephelo.musicbox.MusicBoxMod;
 import dev.cephelo.musicbox.block.ModBlocks;
 import dev.cephelo.musicbox.block.entity.MusicboxBlockEntity;
+import dev.cephelo.musicbox.handler.MBClickButtonPacket;
 import dev.cephelo.musicbox.screens.ModMenuTypes;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
@@ -11,6 +13,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.neoforged.neoforge.items.SlotItemHandler;
+import net.neoforged.neoforge.network.PacketDistributor;
 
 public class MusicboxMenu extends AbstractContainerMenu {
     public final MusicboxBlockEntity blockEntity;
@@ -18,7 +21,7 @@ public class MusicboxMenu extends AbstractContainerMenu {
     private final ContainerData data;
 
     public MusicboxMenu(int pContainerId, Inventory inv, FriendlyByteBuf extraData) {
-        this(pContainerId, inv, inv.player.level().getBlockEntity(extraData.readBlockPos()), new SimpleContainerData(6));
+        this(pContainerId, inv, inv.player.level().getBlockEntity(extraData.readBlockPos()), new SimpleContainerData(4));
     }
 
     public MusicboxMenu(int pContainerId, Inventory inv, BlockEntity entity, ContainerData data) {
@@ -56,6 +59,18 @@ public class MusicboxMenu extends AbstractContainerMenu {
     public boolean isPlayingPreviewSound() {
         // data 2 is previewProgress
         return data.get(2) > 0;
+    }
+
+    public void pressPreviewButton() {
+        MusicBoxMod.LOGGER.info("pressPreviewButton");
+        PacketDistributor.sendToServer(new MBClickButtonPacket(this.blockEntity.getBlockPos(), 0));
+        //blockEntity.previewButton();
+    }
+
+    public void pressCraftButton() {
+        MusicBoxMod.LOGGER.info("pressCraftButton");
+        PacketDistributor.sendToServer(new MBClickButtonPacket(this.blockEntity.getBlockPos(), 1));
+        //blockEntity.craftButton();
     }
 
     // CREDIT GOES TO: diesieben07 | https://github.com/diesieben07/SevenCommons

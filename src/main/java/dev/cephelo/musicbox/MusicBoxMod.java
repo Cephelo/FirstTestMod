@@ -3,12 +3,17 @@ package dev.cephelo.musicbox;
 import dev.cephelo.musicbox.block.ModBlocks;
 import dev.cephelo.musicbox.block.entity.ModBlockEntities;
 import dev.cephelo.musicbox.block.entity.renderer.PedestalBlockEntityRenderer;
+import dev.cephelo.musicbox.handler.MBClickButtonPacket;
+import dev.cephelo.musicbox.handler.MBToggleButtonPacket;
 import dev.cephelo.musicbox.item.ModItems;
 import dev.cephelo.musicbox.recipe.ModRecipes;
 import dev.cephelo.musicbox.screens.ModMenuTypes;
-import dev.cephelo.musicbox.screens.custom.MusicboxUI;
+import dev.cephelo.musicbox.screens.custom.MusicboxScreen;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
+import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
+import net.neoforged.neoforge.network.handling.DirectionalPayloadHandler;
+import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 import org.slf4j.Logger;
 
 import com.mojang.logging.LogUtils;
@@ -152,7 +157,30 @@ public class MusicBoxMod {
         // Combines Musicbox Block Entity with Musicbox Screen
         @SubscribeEvent
         public static void registerScreens(RegisterMenuScreensEvent event) {
-            event.register(ModMenuTypes.MUSICBOX_MENU.get(), MusicboxUI::new);
+            event.register(ModMenuTypes.MUSICBOX_MENU.get(), MusicboxScreen::new);
+        }
+
+        @SubscribeEvent // on the mod event bus
+        public static void register(final RegisterPayloadHandlersEvent event) {
+            final PayloadRegistrar registrar = event.registrar("1");
+            registrar.playToServer(
+                    MBClickButtonPacket.TYPE,
+                    MBClickButtonPacket.STREAM_CODEC,
+                    new DirectionalPayloadHandler<>(
+                            MBClickButtonPacket::handle,
+                            MBClickButtonPacket::handle
+                    )
+            );
+
+            final PayloadRegistrar registrar2 = event.registrar("2");
+            registrar2.playToServer(
+                    MBToggleButtonPacket.TYPE,
+                    MBToggleButtonPacket.STREAM_CODEC,
+                    new DirectionalPayloadHandler<>(
+                            MBToggleButtonPacket::handle,
+                            MBToggleButtonPacket::handle
+                    )
+            );
         }
     }
 

@@ -1,0 +1,23 @@
+{
+  "type": "musicbox:musicbox",
+  "ingredients": [
+    {
+      "item": "minecraft:string"
+    },
+    {
+      "item": "minecraft:phantom_membrane"
+    },
+    {
+      "item": "musicbox:chorus_ingot"
+    },
+    {
+      "item": "minecraft:glowstone_dust"
+    }
+  ],
+  "result": {
+    "id": "minecraft:music_disc_wait"
+  },
+  "soundEvent": "music_disc.wait",
+  "enablePreivew": true,
+  "autoCreateEchoRecipe": true
+}

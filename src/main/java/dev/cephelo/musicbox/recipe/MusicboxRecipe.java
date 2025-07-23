@@ -9,14 +9,12 @@ import net.minecraft.core.NonNullList;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.common.util.RecipeMatcher;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.function.Function;
 
 public record MusicboxRecipe (NonNullList<Ingredient> inputs, ItemStack output, boolean preview, boolean autoEchoRecipe, String sound) implements Recipe<MusicboxRecipeInput> {
@@ -118,29 +116,29 @@ public record MusicboxRecipe (NonNullList<Ingredient> inputs, ItemStack output, 
             return STREAM_CODEC;
         }
 
-        private static MusicboxRecipe fromNetwork(RegistryFriendlyByteBuf buffer) {
-            int i = buffer.readVarInt();
-            NonNullList<Ingredient> nonnulllist = NonNullList.withSize(i, Ingredient.EMPTY);
-            nonnulllist.replaceAll(p_319735_ -> Ingredient.CONTENTS_STREAM_CODEC.decode(buffer));
-            ItemStack itemstack = ItemStack.STREAM_CODEC.decode(buffer);
-
-            Boolean p = buffer.readBoolean();
-            Boolean aer = buffer.readBoolean();
-            String s = buffer.readUtf();
-
-            return new MusicboxRecipe(nonnulllist, itemstack, p, aer, s);
-        }
-
-        private static void toNetwork(RegistryFriendlyByteBuf buffer, MusicboxRecipe recipe) {
-            buffer.writeUtf(recipe.sound);
-            buffer.writeBoolean(recipe.preview);
-            buffer.writeBoolean(recipe.autoEchoRecipe);
-
-            for (Ingredient ingredient : recipe.inputs) {
-                Ingredient.CONTENTS_STREAM_CODEC.encode(buffer, ingredient);
-            }
-
-            ItemStack.STREAM_CODEC.encode(buffer, recipe.output);
-        }
+//        private static MusicboxRecipe fromNetwork(RegistryFriendlyByteBuf buffer) {
+//            int i = buffer.readVarInt();
+//            NonNullList<Ingredient> nonnulllist = NonNullList.withSize(i, Ingredient.EMPTY);
+//            nonnulllist.replaceAll(p_319735_ -> Ingredient.CONTENTS_STREAM_CODEC.decode(buffer));
+//            ItemStack itemstack = ItemStack.STREAM_CODEC.decode(buffer);
+//
+//            Boolean p = buffer.readBoolean();
+//            Boolean aer = buffer.readBoolean();
+//            String s = buffer.readUtf();
+//
+//            return new MusicboxRecipe(nonnulllist, itemstack, p, aer, s);
+//        }
+//
+//        private static void toNetwork(RegistryFriendlyByteBuf buffer, MusicboxRecipe recipe) {
+//            buffer.writeUtf(recipe.sound);
+//            buffer.writeBoolean(recipe.preview);
+//            buffer.writeBoolean(recipe.autoEchoRecipe);
+//
+//            for (Ingredient ingredient : recipe.inputs) {
+//                Ingredient.CONTENTS_STREAM_CODEC.encode(buffer, ingredient);
+//            }
+//
+//            ItemStack.STREAM_CODEC.encode(buffer, recipe.output);
+//        }
     }
 }

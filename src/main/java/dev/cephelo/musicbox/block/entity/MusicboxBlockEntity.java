@@ -1,5 +1,7 @@
 package dev.cephelo.musicbox.block.entity;
 
+import dev.cephelo.musicbox.MusicBoxMod;
+import dev.cephelo.musicbox.handler.MBToggleButtonPacket;
 import dev.cephelo.musicbox.recipe.ModRecipes;
 import dev.cephelo.musicbox.recipe.MusicboxRecipe;
 import dev.cephelo.musicbox.recipe.MusicboxRecipeInput;
@@ -25,6 +27,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.items.ItemStackHandler;
+import net.neoforged.neoforge.network.PacketDistributor;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
@@ -56,10 +59,6 @@ public class MusicboxBlockEntity extends BlockEntity implements MenuProvider {
     private int maxPreviewProgress = 160;
     private boolean isPlayingPreviewSound = false;
 
-    private boolean previewButtonEnabled = false;
-    private boolean craftButtonEnabled = false;
-
-
     public MusicboxBlockEntity(BlockPos pos, BlockState blockState) {
         super(ModBlockEntities.MUSICBOX_BE.get(), pos, blockState);
         data = new ContainerData() {
@@ -70,8 +69,6 @@ public class MusicboxBlockEntity extends BlockEntity implements MenuProvider {
                     case 1 -> MusicboxBlockEntity.this.maxProgress;
                     case 2 -> MusicboxBlockEntity.this.previewProgress;
                     case 3 -> MusicboxBlockEntity.this.maxPreviewProgress;
-                    case 4 -> MusicboxBlockEntity.this.previewButtonEnabled ? 1 : 0; // cast bool to int
-                    case 5 -> MusicboxBlockEntity.this.craftButtonEnabled ? 1 : 0; // cast bool to int
                     default -> 0;
                 };
             }
@@ -83,14 +80,12 @@ public class MusicboxBlockEntity extends BlockEntity implements MenuProvider {
                     case 1: MusicboxBlockEntity.this.maxProgress = value;
                     case 2: MusicboxBlockEntity.this.previewProgress = value;
                     case 3: MusicboxBlockEntity.this.maxPreviewProgress = value;
-                    case 4: MusicboxBlockEntity.this.previewButtonEnabled = value == 1; // cast int to bool
-                    case 5: MusicboxBlockEntity.this.craftButtonEnabled = value == 1; // cast int to bool
                 }
             }
 
             @Override
             public int getCount() {
-                return 6;
+                return 4;
             }
         };
     }
@@ -121,8 +116,6 @@ public class MusicboxBlockEntity extends BlockEntity implements MenuProvider {
         pTag.putInt("musicbox.max_progress", maxProgress);
         pTag.putInt("musicbox.preview_progress", previewProgress);
         pTag.putInt("musicbox.max_preview_progress", maxPreviewProgress);
-        pTag.putBoolean("musicbox.preview_button_enabled", previewButtonEnabled);
-        pTag.putBoolean("musicbox.craft_button_enabled", craftButtonEnabled);
 
         super.saveAdditional(pTag, pRegistries);
     }
@@ -136,13 +129,9 @@ public class MusicboxBlockEntity extends BlockEntity implements MenuProvider {
         maxProgress = pTag.getInt("musicbox.max_progress");
         previewProgress = pTag.getInt("musicbox.preview_progress");
         maxPreviewProgress = pTag.getInt("musicbox.max_preview_progress");
-        previewButtonEnabled = pTag.getBoolean("musicbox.preview_button_enabled");
-        craftButtonEnabled = pTag.getBoolean("musicbox.craft_button_enabled");
     }
 
     public void tick(Level level, BlockPos pos, BlockState state) {
-        attemptDiscWrite();
-
         if (itemBeingCrafted != null) {
             progress++;
             if (progress >= maxProgress) {
@@ -162,7 +151,6 @@ public class MusicboxBlockEntity extends BlockEntity implements MenuProvider {
         }
 
         if (isPlayingPreviewSound) previewProgress++;
-        setChanged(level, pos, state);
 
         if (progress == 0 && itemHandler.getStackInSlot(OUTPUT_SLOT).isEmpty()) {
             MusicboxRecipe recipe = checkRecipe();
@@ -176,11 +164,31 @@ public class MusicboxBlockEntity extends BlockEntity implements MenuProvider {
 
         if (previewProgress >= maxPreviewProgress) stopPreviewSound(true);
 
+        setChanged(level, pos, state);
+
+    }
+
+    public void handleButtonPress(int id) {
+        if (level.isClientSide()) return;
+
+        switch (id) {
+            case 0: { // previewButton
+                this.playPreviewSound(false);
+                break;
+            }
+            case 1: { // craftButton
+                this.attemptDiscWrite();
+                break;
+            }
+        }
     }
 
     // When Craft button is clicked
     public void attemptDiscWrite() {
+        if (itemBeingCrafted != null) return;
+
         MusicboxRecipe recipe = checkRecipe();
+
         if (recipe != null && itemHandler.getStackInSlot(OUTPUT_SLOT).isEmpty()) {
             stopPreviewSound(false);
             enableButtons(false, false);
@@ -192,15 +200,15 @@ public class MusicboxBlockEntity extends BlockEntity implements MenuProvider {
             itemHandler.extractItem(INPUT3_SLOT, 1, false);
             itemHandler.extractItem(INPUT4_SLOT, 1, false);
 
-            itemBeingCrafted = recipe.output();
+            itemBeingCrafted = recipe.output().copy();
             playPreviewSound(true);
         } else {
             // error sound
+            MusicBoxMod.LOGGER.info("null recipe");
         }
     }
 
     private MusicboxRecipe checkRecipe() {
-
         NonNullList<ItemStack> itemList = NonNullList.create();
         for (int i = 0; i < 4; i++) {
             if (!itemHandler.getStackInSlot(i).isEmpty()) {
@@ -237,10 +245,9 @@ public class MusicboxBlockEntity extends BlockEntity implements MenuProvider {
         }
     }
 
-    private void enableButtons(boolean enablePreviewButton, boolean enableCraftButton) {
+    public void enableButtons(boolean enablePreviewButton, boolean enableCraftButton) {
         // enable/disable buttons
-        previewButtonEnabled = enablePreviewButton;
-        craftButtonEnabled = enableCraftButton;
+        PacketDistributor.sendToServer(new MBToggleButtonPacket(this.getBlockPos(), enablePreviewButton ? 1 : 0, enableCraftButton ? 1 : 0));
     }
 
     // Client-Server Sync
