@@ -9,5 +9,10 @@
   "item.musicbox.raw_chorus": "Raw Murichorum",
   "item.musicbox.old_parchment": "Old Parchment",
   "item.musicbox.disclet": "Disclet",
-  "trim_materal.musicbox.chorus": "Murichorum"
+  "trim_materal.musicbox.chorus": "Murichorum",
+  "sounds.musicbox.preview_start": "Music Box plays tune",
+  "sounds.musicbox.preview_stop": "Music Box stops",
+  "sounds.musicbox.record_scratch": "Music Box scratches",
+  "sounds.musicbox.crafting_shudder": "Music Box whines",
+  "sounds.musicbox.crafting_done": "Music Box finishes"
 }

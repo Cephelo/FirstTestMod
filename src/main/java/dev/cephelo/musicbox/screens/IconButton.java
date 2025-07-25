@@ -7,7 +7,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.neoforged.neoforge.client.gui.widget.ExtendedButton;
 
 public class IconButton extends ExtendedButton {
-    private final ResourceLocation sprite;
+    private ResourceLocation sprite;
     private final OnPress onPress;
 
     public IconButton(int x, int y, int width, int height, Component displayString,
@@ -23,12 +23,16 @@ public class IconButton extends ExtendedButton {
 
     @Override
     public void onPress() {
-        this.onPress.onPress(this);//this.onPress.run();
+        this.onPress.onPress(this);
+    }
+
+    public void setSprite(ResourceLocation sprite) {
+        this.sprite = sprite;
     }
 
     @Override
     public void renderWidget(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
         super.renderWidget(guiGraphics, mouseX, mouseY, partialTicks);
-        //guiGraphics.blitSprite(sprite, getX(), getY(), width, height);
+        guiGraphics.blit(sprite, getX(), getY(), 0, this.active ? 0 : 16, 0, width, height, 32, 16);
     }
 }

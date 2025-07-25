@@ -10,6 +10,8 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 
+import java.util.ArrayList;
+
 public class MusicboxScreen extends AbstractContainerScreen<MusicboxMenu> {
     private static final ResourceLocation GUI_TEXTURE =
             ResourceLocation.fromNamespaceAndPath(MusicBoxMod.MODID,"textures/gui/musicbox_gui.png");
@@ -22,10 +24,7 @@ public class MusicboxScreen extends AbstractContainerScreen<MusicboxMenu> {
     private static final ResourceLocation ICON_CRAFT =
             ResourceLocation.fromNamespaceAndPath(MusicBoxMod.MODID,"textures/gui/icon_craft.png");
 
-    private final IconButton previewButton = new IconButton(this.getGuiLeft() + 16, this.getGuiTop() + 16, 16, 16, Component.empty(),
-            menu.isPlayingPreviewSound() && !menu.isCrafting() ? ICON_PAUSE : ICON_PLAY, m -> this.menu.pressPreviewButton());
-    private final IconButton craftButton = new IconButton(this.getGuiLeft() + 16, this.getGuiTop() + 48, 16, 16, Component.empty(),
-            ICON_CRAFT, b -> this.menu.pressCraftButton());
+    private final ArrayList<IconButton> buttons = new ArrayList<>();
 
     public MusicboxScreen(MusicboxMenu menu, Inventory playerInventory, Component title) {
         super(menu, playerInventory, title);
@@ -33,9 +32,20 @@ public class MusicboxScreen extends AbstractContainerScreen<MusicboxMenu> {
 
     @Override
     protected void init() {
+        super.init();
+
+        IconButton previewButton = new IconButton(leftPos + 104, topPos + 58, 16, 16, Component.empty(),
+                menu.isPlayingPreviewSound() && !menu.isCrafting() ? ICON_PAUSE : ICON_PLAY, m -> this.menu.pressPreviewButton());
+        IconButton craftButton = new IconButton(leftPos + 128, topPos + 34, 16, 16, Component.empty(),
+                ICON_CRAFT, b -> this.menu.pressCraftButton());
+
         this.addRenderableWidget(previewButton);
         this.addRenderableWidget(craftButton);
-        super.init();
+
+        buttons.add(previewButton);
+        buttons.add(craftButton);
+
+        toggleButtons(false, false, false);
     }
 
     // GUI Background
@@ -56,19 +66,18 @@ public class MusicboxScreen extends AbstractContainerScreen<MusicboxMenu> {
     // Progress Arrow/Texture
     private void renderProgressArrow(GuiGraphics guiGraphics, int x, int y) {
         if(menu.isCrafting()) {
-            guiGraphics.blit(ARROW_TEXTURE,x + 83, y + 35, 0, 0, menu.getScaledArrowProgress(), 16, 24, 16);
+            guiGraphics.blit(ARROW_TEXTURE,x + 72, y + 35, 0, 0, menu.getScaledArrowProgress(), 16, 24, 16);
         }
     }
 
-    public void toggleButtons(boolean enablePreviewButton, boolean enableCraftButton) {
-        this.previewButton.active = enablePreviewButton;
-        this.craftButton.active = enableCraftButton;
+    public void toggleButtons(boolean enablePreviewButton, boolean enableCraftButton, boolean isPlaying) {
+        buttons.get(0).active = enablePreviewButton;
+        buttons.get(1).active = enableCraftButton;
+        buttons.get(0).setSprite(isPlaying && enablePreviewButton ? ICON_PAUSE : ICON_PLAY);
     }
 
     @Override
     public void render(GuiGraphics pGuiGraphics, int pMouseX, int pMouseY, float pPartialTick) {
-        //MusicBoxMod.LOGGER.info("ui: " + this.previewButton.active + " " + this.craftButton.active);
-
         super.render(pGuiGraphics, pMouseX, pMouseY, pPartialTick);
         this.renderTooltip(pGuiGraphics, pMouseX, pMouseY);
     }

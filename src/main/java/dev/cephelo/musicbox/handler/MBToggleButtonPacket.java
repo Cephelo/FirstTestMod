@@ -14,7 +14,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 
-public record MBToggleButtonPacket(BlockPos pos, int pre, int cra) implements CustomPacketPayload {
+public record MBToggleButtonPacket(BlockPos pos, int pre, int cra, int playing) implements CustomPacketPayload {
 
     public static final CustomPacketPayload.Type<MBToggleButtonPacket> TYPE = new CustomPacketPayload.Type<>(ResourceLocation.fromNamespaceAndPath(MusicBoxMod.MODID, "mb_togglebutton_data"));
 
@@ -29,6 +29,8 @@ public record MBToggleButtonPacket(BlockPos pos, int pre, int cra) implements Cu
             MBToggleButtonPacket::pre,
             ByteBufCodecs.VAR_INT,
             MBToggleButtonPacket::cra,
+            ByteBufCodecs.VAR_INT,
+            MBToggleButtonPacket::playing,
             MBToggleButtonPacket::new
     );
 
@@ -48,9 +50,10 @@ public record MBToggleButtonPacket(BlockPos pos, int pre, int cra) implements Cu
         }
 
         try {
-            ((MusicboxScreen)Minecraft.getInstance().screen).toggleButtons(pre == 1, cra == 1);
+            if (Minecraft.getInstance().screen != null)
+                ((MusicboxScreen)Minecraft.getInstance().screen).toggleButtons(pre == 1, cra == 1, playing == 1);
         } catch (Exception e) {
-            MusicBoxMod.LOGGER.info("naw shit broke 2");
+            MusicBoxMod.LOGGER.error("MBToggleButtonPacket error: ", e);
         }
 
     }

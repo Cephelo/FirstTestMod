@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "E": {
+  	  "item": "minecraft:echo_shard"
+  	},
+    "D": {
+  	  "item": "minecraft:deepslate_tiles"
+  	},
+    "S": {
+  	  "item": "minecraft:deepslate_tile_slab"
+  	},
+    "C": {
+  	  "item": "musicbox:chorus_block"
+  	}
+  },
+  "pattern": [
+    "SES",
+    "SDS",
+    "SCS"
+  ],
+  "result": {
+    "id": "musicbox:echo_pedestal"
+  },
+  "show_notification": true
+}

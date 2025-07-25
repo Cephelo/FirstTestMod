@@ -1,0 +1,48 @@
+{
+  "record_scratch": {
+    "subtitle": "sounds.musicbox.record_scratch",
+    "sounds": [
+      {
+        "name": "musicbox:record_scratch",
+        "volume": 0.7
+      }
+    ]
+  },
+  "preview_start": {
+    "subtitle": "sounds.musicbox.preview_start",
+    "sounds": [
+      "musicbox:preview_start"
+    ]
+  },
+  "preview_stop": {
+    "subtitle": "sounds.musicbox.preview_stop",
+    "sounds": [
+      {
+        "name": "musicbox:preview_start",
+        "type": "event",
+        "pitch": 0.75
+      }
+    ]
+  },
+  "crafting_shudder": {
+    "subtitle": "sounds.musicbox.crafting_shudder",
+    "sounds": [
+      {
+        "name": "entity.enderman.stare",
+        "type": "event",
+        "pitch": 2,
+        "volume": 0.8
+      }
+    ]
+  },
+  "crafting_done": {
+    "subtitle": "sounds.musicbox.crafting_done",
+    "sounds": [
+      {
+        "name": "block.beacon.power_select",
+        "type": "event",
+        "volume": 0.8
+      }
+    ]
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+  	  "item": "minecraft:amethyst_shard"
+  	},
+    "G": {
+  	  "item": "minecraft:ghast_tear"
+  	},
+    "O": {
+  	  "item": "minecraft:obsidian"
+  	},
+    "J": {
+  	  "item": "minecraft:jukebox"
+  	},
+    "R": {
+  	  "item": "minecraft:respawn_anchor"
+  	},
+    "C": {
+  	  "item": "musicbox:chorus_block"
+  	}
+  },
+  "pattern": [
+    "AGA",
+    "OJO",
+    "CRC"
+  ],
+  "result": {
+    "id": "musicbox:musicbox"
+  },
+  "show_notification": true
+}
