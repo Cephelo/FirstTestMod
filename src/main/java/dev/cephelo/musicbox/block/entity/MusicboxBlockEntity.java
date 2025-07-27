@@ -1,6 +1,7 @@
 package dev.cephelo.musicbox.block.entity;
 
 import dev.cephelo.musicbox.MusicBoxMod;
+import dev.cephelo.musicbox.block.custom.MusicboxStatus;
 import dev.cephelo.musicbox.handler.MBToggleButtonPacket;
 import dev.cephelo.musicbox.recipe.ModRecipes;
 import dev.cephelo.musicbox.recipe.MusicboxRecipe;
@@ -14,6 +15,7 @@ import net.minecraft.client.sounds.SoundManager;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtOps;
@@ -22,6 +24,7 @@ import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.Containers;
@@ -34,13 +37,19 @@ import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BeaconBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.gameevent.GameEvent;
+import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.items.ItemStackHandler;
 import net.neoforged.neoforge.network.PacketDistributor;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
+
+import static dev.cephelo.musicbox.block.custom.MusicboxBlock.BEACON;
+import static dev.cephelo.musicbox.block.custom.MusicboxBlock.STATUS;
 
 public class MusicboxBlockEntity extends BlockEntity implements MenuProvider {
     public final ItemStackHandler itemHandler = new ItemStackHandler(5) {
@@ -75,6 +84,7 @@ public class MusicboxBlockEntity extends BlockEntity implements MenuProvider {
 
     public MusicboxBlockEntity(BlockPos pos, BlockState blockState) {
         super(ModBlockEntities.MUSICBOX_BE.get(), pos, blockState);
+
         data = new ContainerData() {
             @Override
             public int get(int i) {
@@ -149,6 +159,21 @@ public class MusicboxBlockEntity extends BlockEntity implements MenuProvider {
     }
 
     public void tick(Level level, BlockPos pos, BlockState state) {
+
+        // Display music note particles like jukebox
+        if (isPlayingPreviewSound && previewProgress % (itemBeingCrafted == ItemStack.EMPTY ? 20 : 10) == 0) {
+            if (level instanceof ServerLevel serverlevel) {
+                Vec3 vec3 = Vec3.atBottomCenterOf(pos).add(0.0, 1.2F, 0.0);
+                float f = level.getRandom().nextInt(4) / 24.0F + (this.getBlockState().getValue(BEACON) ? 0.65F : 0.35F);
+                serverlevel.sendParticles(ParticleTypes.NOTE, vec3.x(), vec3.y(), vec3.z(), 0, f, 0.0, 0.0, 1.0);
+            }
+        }
+
+        // Beacon check
+        boolean beacon = level.getBlockEntity(this.getBlockPos().below()) instanceof BeaconBlockEntity bea && bea.levels >= 4 && !bea.getBeamSections().isEmpty();
+        if (this.getBlockState().getValue(BEACON) != beacon)
+            level.setBlock(pos, state.setValue(BEACON, beacon), 3);
+
         if (itemBeingCrafted != ItemStack.EMPTY || progress > 0) {
             progress++;
             if (progress >= maxProgress) {
@@ -161,13 +186,13 @@ public class MusicboxBlockEntity extends BlockEntity implements MenuProvider {
                 itemBeingCrafted = ItemStack.EMPTY;
                 // play finish sound
                 manager.stop(shudderSound);
-                this.level.playSound(null, this.getBlockPos(), ModSounds.CRAFTING_DONE.get(), SoundSource.RECORDS, 1, 1);
+                if (this.level != null) this.level.playSound(null, this.getBlockPos(), ModSounds.CRAFTING_DONE.get(), SoundSource.RECORDS);
+
+                level.setBlock(pos, state.setValue(STATUS, MusicboxStatus.IDLE), 3);
             }
 
             if (progress == maxProgress - 50) {
-                // play 11 sound
-                manager.play(shudderSound);
-                //this.level.playSound(null, this.getBlockPos(), ModSounds.CRAFTING_SHUDDER.get(), SoundSource.RECORDS, 1, 1);
+                manager.play(shudderSound); // play 11 sound
             }
         }
 
@@ -176,6 +201,7 @@ public class MusicboxBlockEntity extends BlockEntity implements MenuProvider {
         if (progress == 0 && itemHandler.getStackInSlot(OUTPUT_SLOT).isEmpty()) {
             MusicboxRecipe recipe = checkRecipe();
             enableButtons(recipe != null && recipe.preview(), recipe != null);
+
             if (recipe != null) {
                 // show ghost item in output
             } else {
@@ -216,6 +242,9 @@ public class MusicboxBlockEntity extends BlockEntity implements MenuProvider {
         MusicboxRecipe recipe = checkRecipe();
 
         if (recipe != null && itemHandler.getStackInSlot(OUTPUT_SLOT).isEmpty()) {
+
+            if (!beaconCheck(recipe.beacon())) return;
+
             enableButtons(false, false);
             // hide ghost item in output
 
@@ -227,8 +256,11 @@ public class MusicboxBlockEntity extends BlockEntity implements MenuProvider {
 
             itemBeingCrafted = recipe.output().copy();
             playPreviewSound(true);
+
+            if (level != null) level.setBlock(this.getBlockPos(), this.getBlockState().setValue(STATUS, MusicboxStatus.CRAFTING), 3);
         } else {
-            // error sound
+            // play error sound
+            if (level != null) this.level.playSound(null, this.getBlockPos(), ModSounds.ERROR.get(), SoundSource.RECORDS);
             MusicBoxMod.LOGGER.info("null recipe");
         }
     }
@@ -245,27 +277,31 @@ public class MusicboxBlockEntity extends BlockEntity implements MenuProvider {
                 this.level.getRecipeManager().getRecipeFor(ModRecipes.MUSICBOX_TYPE.get(),
                         new MusicboxRecipeInput(itemList), level);
 
-        return recipe.isEmpty() ? null : recipe.get().value();
+        return recipe.map(RecipeHolder::value).orElse(null);//recipe.isEmpty() ? null : recipe.get().value();
     }
 
     private void playPreviewSound(boolean spedUp) {
         MusicboxRecipe recipe = checkRecipe();
         if (recipe != null && itemHandler.getStackInSlot(OUTPUT_SLOT).isEmpty()) {
             stopPreviewSound(false, spedUp);
-            if (this.level != null)
-                this.level.playSound(null, this.getBlockPos(), ModSounds.PREVIEW_START.get(), SoundSource.RECORDS, 1, 1);
 
+            if (!beaconCheck(recipe.beacon())) return;
+
+            if (this.level != null)
+                this.level.playSound(null, this.getBlockPos(), ModSounds.PREVIEW_START.get(), SoundSource.RECORDS);
 
             // play recipe.sound on SoundSource, pitch spedUp+1
             SoundEvent sound = BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.tryParse(recipe.sound()));
             if (sound != null) {
-                previewSound = new SimpleSoundInstance(sound, SoundSource.RECORDS, 1, (spedUp ? 3 : 1), SoundInstance.createUnseededRandom(), this.getBlockPos());
+                previewSound = new SimpleSoundInstance(sound, SoundSource.RECORDS, 0.8f, (spedUp ? 2 : 1), SoundInstance.createUnseededRandom(), this.getBlockPos());
                 manager.play(previewSound);
-            }
+                isPlayingPreviewSound = true;
 
-            isPlayingPreviewSound = true;
+                if (!spedUp && level != null) level.setBlock(this.getBlockPos(), this.getBlockState().setValue(STATUS, MusicboxStatus.PREVIEW), 3);
+            }
         } else {
             // play error sound
+            if (level != null) this.level.playSound(null, this.getBlockPos(), ModSounds.ERROR.get(), SoundSource.RECORDS);
         }
     }
 
@@ -274,14 +310,29 @@ public class MusicboxBlockEntity extends BlockEntity implements MenuProvider {
 
         // Record Scratch sound plays is crafting is started while preview is playing
         if (previewProgress < maxPreviewProgress && previewProgress > 0 && craftStop && this.level != null)
-            this.level.playSound(null, this.getBlockPos(), ModSounds.RECORD_SCRATCH.get(), SoundSource.RECORDS, 1, 1);
+            this.level.playSound(null, this.getBlockPos(), ModSounds.RECORD_SCRATCH.get(), SoundSource.RECORDS);
         // Otherwise stop sound is played
         else if (this.level != null && playStopSound)
-            this.level.playSound(null, this.getBlockPos(), ModSounds.PREVIEW_STOP.get(), SoundSource.RECORDS, 1, 1);
+            this.level.playSound(null, this.getBlockPos(), ModSounds.PREVIEW_STOP.get(), SoundSource.RECORDS);
+
+        if (level != null) level.setBlock(this.getBlockPos(), this.getBlockState().setValue(STATUS, MusicboxStatus.IDLE), 3);
 
         previewProgress = 0;
         isPlayingPreviewSound = false;
 
+    }
+
+    private boolean beaconCheck(boolean needsBeacon) {
+        if (!needsBeacon) return true;
+
+//        if (level != null
+//                && level.getBlockEntity(this.getBlockPos().below()) instanceof BeaconBlockEntity bea) {
+//            return bea.levels >= 4 && !bea.getBeamSections().isEmpty();
+//        }
+
+        // Play beacon deactivate sound if recipe needs Lvl4 beacon but does not have one
+        if (!this.getBlockState().getValue(BEACON) && level != null) this.level.playSound(null, this.getBlockPos(), ModSounds.BEACON_FAIL.get(), SoundSource.RECORDS);
+        return this.getBlockState().getValue(BEACON);
     }
 
     private void enableButtons(boolean enablePreviewButton, boolean enableCraftButton) {

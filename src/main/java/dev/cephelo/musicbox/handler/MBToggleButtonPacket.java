@@ -43,15 +43,17 @@ public record MBToggleButtonPacket(BlockPos pos, int pre, int cra, int playing) 
     {
         // Thank you to Commoble for this example block
         Player p = context.player();
-        if (!(p instanceof ServerPlayer player) || !(player.containerMenu instanceof MusicboxMenu menu))
+        if (!(p instanceof ServerPlayer player) || !(player.containerMenu instanceof MusicboxMenu))
         {
             // don't do anything else if menu isn't open (averts possible spam from bad actors)
             return;
         }
 
+        if (((MusicboxMenu) player.containerMenu).blockEntity.getBlockPos().asLong() != pos.asLong()) return;
+
         try {
-            if (Minecraft.getInstance().screen != null)
-                ((MusicboxScreen)Minecraft.getInstance().screen).toggleButtons(pre == 1, cra == 1, playing == 1);
+            if (Minecraft.getInstance().screen instanceof MusicboxScreen mbs)
+                mbs.toggleButtons(pre == 1, cra == 1, playing == 1);
         } catch (Exception e) {
             MusicBoxMod.LOGGER.error("MBToggleButtonPacket error: ", e);
         }

@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_top",
+  "textures": {
+    "side": "musicbox:block/musicbox_crafting",
+    "top": "minecraft:block/jukebox_top"
+  }
+}

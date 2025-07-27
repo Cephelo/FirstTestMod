@@ -13,19 +13,30 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.Nullable;
 
 public class MusicboxBlock extends BaseEntityBlock {
     public static final MapCodec<MusicboxBlock> CODEC = simpleCodec(MusicboxBlock::new);
 
+    public static final EnumProperty<MusicboxStatus> STATUS = EnumProperty.create("status", MusicboxStatus.class);
+    public static final BooleanProperty BEACON = BooleanProperty.create("beacon_powered");
+
     public MusicboxBlock(Properties properties) {
         super(properties);
+        this.registerDefaultState(this.defaultBlockState()
+                .setValue(STATUS, MusicboxStatus.IDLE)
+                .setValue(BEACON, false)
+        );
     }
 
     @Override
@@ -77,5 +88,9 @@ public class MusicboxBlock extends BaseEntityBlock {
         return createTickerHelper(blockEntityType, ModBlockEntities.MUSICBOX_BE.get(),
                 (pLevel, blockpos, blockstate, blockEntity) -> blockEntity.tick(pLevel, blockpos, blockstate));
     }
-}
 
+    @Override
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+        builder.add(STATUS, BEACON);
+    }
+}

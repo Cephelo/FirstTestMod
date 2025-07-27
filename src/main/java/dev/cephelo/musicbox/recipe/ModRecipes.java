@@ -24,6 +24,15 @@ public class ModRecipes {
                 }
             });
 
+    public static final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<PedestalRecipe>> PEDESTAL_SERIALIZER =
+            SERIALIZERS.register("pedestal", PedestalRecipe.Serializer::new);
+    public static final DeferredHolder<RecipeType<?>, RecipeType<PedestalRecipe>> PEDESTAL_TYPE =
+            TYPES.register("pedestal", () -> new RecipeType<PedestalRecipe>() {
+                @Override
+                public String toString() {
+                    return "pedestal";
+                }
+            });
 
     public static void register(IEventBus eventBus) {
         SERIALIZERS.register(eventBus);

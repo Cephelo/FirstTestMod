@@ -44,5 +44,66 @@
         "volume": 0.8
       }
     ]
+  },
+  "beacon_fail": {
+    "subtitle": "sounds.musicbox.beacon_fail",
+    "sounds": [
+      {
+        "name": "block.beacon.deactivate",
+        "type": "event",
+        "volume": 0.5
+      }
+    ]
+  },
+  "error": {
+    "subtitle": "sounds.musicbox.error",
+    "sounds": [
+      {
+        "name": "block.note_block.bass",
+        "type": "event",
+        "volume": 1.5,
+        "pitch": 0.5
+      }
+    ]
+  },
+  "ore_sing": {
+    "subtitle": "sounds.musicbox.ore_sing",
+    "sounds": [
+      {
+        "name": "block.beacon.ambient",
+        "type": "event",
+        "volume": 2
+      }
+    ]
+  },
+  "pedestal_item_place": {
+    "subtitle": "sounds.musicbox.pedestal_item_place",
+    "sounds": [
+      {
+        "name": "entity.item.pickup",
+        "type": "event"
+      }
+    ]
+  },
+  "pedestal_item_pickup": {
+    "subtitle": "sounds.musicbox.pedestal_item_pickup",
+    "sounds": [
+      {
+        "name": "entity.item.pickup",
+        "type": "event",
+        "volume": 2
+      }
+    ]
+  },
+  "pedestal_craft": {
+    "subtitle": "sounds.musicbox.pedestal_craft",
+    "sounds": [
+      {
+        "name": "entity.warden.sonic_boom",
+        "type": "event",
+        "volume": 0.75,
+        "pitch": 0.75
+      }
+    ]
   }
 }

@@ -19,5 +19,5 @@
   },
   "soundEvent": "music_disc.wait",
   "enablePreivew": true,
-  "autoCreateEchoRecipe": true
+  "needsBeacon": false
 }

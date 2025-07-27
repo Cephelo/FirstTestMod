@@ -1,6 +1,7 @@
 package dev.cephelo.musicbox.block;
 
 import dev.cephelo.musicbox.MusicBoxMod;
+import dev.cephelo.musicbox.block.custom.ChorusOreBlock;
 import dev.cephelo.musicbox.block.custom.MusicboxBlock;
 import dev.cephelo.musicbox.block.custom.PedestalBlock;
 import dev.cephelo.musicbox.item.ModItems;
@@ -30,10 +31,12 @@ public class ModBlocks {
             .requiresCorrectToolForDrops()
     ));
 
-    public static final DeferredBlock<Block> CHORUS_ORE = registerBlock("chorus_ore", () -> new Block(BlockBehaviour.Properties.of()
-            .sound(SoundType.STONE)
-            .strength(3f, 4f)
-            .requiresCorrectToolForDrops()
+    public static final DeferredBlock<Block> CHORUS_ORE = registerBlock("chorus_ore",
+            () -> new ChorusOreBlock(BlockBehaviour.Properties.of()
+                    .sound(SoundType.STONE)
+                    .strength(3f, 4f)
+                    .requiresCorrectToolForDrops()
+                    .randomTicks()
     ));
 
     public static final DeferredBlock<Block> ECHO_PEDESTAL = registerBlock("echo_pedestal",

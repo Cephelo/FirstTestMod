@@ -17,7 +17,7 @@ import net.neoforged.neoforge.common.util.RecipeMatcher;
 import java.util.ArrayList;
 import java.util.function.Function;
 
-public record MusicboxRecipe (NonNullList<Ingredient> inputs, ItemStack output, boolean preview, boolean autoEchoRecipe, String sound) implements Recipe<MusicboxRecipeInput> {
+public record MusicboxRecipe (NonNullList<Ingredient> inputs, ItemStack output, boolean preview, boolean beacon, String sound) implements Recipe<MusicboxRecipeInput> {
 
     @Override
     public NonNullList<Ingredient> getIngredients() {
@@ -88,7 +88,7 @@ public record MusicboxRecipe (NonNullList<Ingredient> inputs, ItemStack output, 
                 ).forGetter(MusicboxRecipe::inputs),
                 ItemStack.CODEC.fieldOf("result").forGetter(MusicboxRecipe::output),
                 Codec.BOOL.optionalFieldOf("enablePreview", true).forGetter(MusicboxRecipe::preview),
-                Codec.BOOL.optionalFieldOf("autoCreateEchoRecipe", true).forGetter(MusicboxRecipe::autoEchoRecipe),
+                Codec.BOOL.optionalFieldOf("needsBeacon", true).forGetter(MusicboxRecipe::beacon),
                 Codec.STRING.fieldOf("soundEvent").forGetter(MusicboxRecipe::sound)
         ).apply(inst, MusicboxRecipe::new));
 
@@ -100,7 +100,7 @@ public record MusicboxRecipe (NonNullList<Ingredient> inputs, ItemStack output, 
                         Ingredient.CONTENTS_STREAM_CODEC.apply(ByteBufCodecs.list()).map(NonNullList::copyOf, Function.identity()), MusicboxRecipe::inputs,
                         ItemStack.STREAM_CODEC, MusicboxRecipe::output,
                         ByteBufCodecs.BOOL, MusicboxRecipe::preview,
-                        ByteBufCodecs.BOOL, MusicboxRecipe::autoEchoRecipe,
+                        ByteBufCodecs.BOOL, MusicboxRecipe::beacon,
                         ByteBufCodecs.STRING_UTF8, MusicboxRecipe::sound,
                         MusicboxRecipe::new
                 );
@@ -132,7 +132,7 @@ public record MusicboxRecipe (NonNullList<Ingredient> inputs, ItemStack output, 
 //        private static void toNetwork(RegistryFriendlyByteBuf buffer, MusicboxRecipe recipe) {
 //            buffer.writeUtf(recipe.sound);
 //            buffer.writeBoolean(recipe.preview);
-//            buffer.writeBoolean(recipe.autoEchoRecipe);
+//            buffer.writeBoolean(recipe.beacon);
 //
 //            for (Ingredient ingredient : recipe.inputs) {
 //                Ingredient.CONTENTS_STREAM_CODEC.encode(buffer, ingredient);

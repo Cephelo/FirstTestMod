@@ -35,15 +35,15 @@ public class MusicboxScreen extends AbstractContainerScreen<MusicboxMenu> {
         super.init();
 
         IconButton previewButton = new IconButton(leftPos + 104, topPos + 58, 16, 16, Component.empty(),
-                menu.isPlayingPreviewSound() && !menu.isCrafting() ? ICON_PAUSE : ICON_PLAY, m -> this.menu.pressPreviewButton());
+                this.menu.isPlayingPreviewSound() && !menu.isCrafting() ? ICON_PAUSE : ICON_PLAY, m -> this.menu.pressPreviewButton());
         IconButton craftButton = new IconButton(leftPos + 128, topPos + 34, 16, 16, Component.empty(),
                 ICON_CRAFT, b -> this.menu.pressCraftButton());
 
         this.addRenderableWidget(previewButton);
         this.addRenderableWidget(craftButton);
 
-        buttons.add(previewButton);
-        buttons.add(craftButton);
+        this.buttons.add(previewButton);
+        this.buttons.add(craftButton);
 
         toggleButtons(false, false, false);
     }
@@ -65,15 +65,15 @@ public class MusicboxScreen extends AbstractContainerScreen<MusicboxMenu> {
 
     // Progress Arrow/Texture
     private void renderProgressArrow(GuiGraphics guiGraphics, int x, int y) {
-        if(menu.isCrafting()) {
-            guiGraphics.blit(ARROW_TEXTURE,x + 72, y + 35, 0, 0, menu.getScaledArrowProgress(), 16, 24, 16);
+        if(this.menu.isCrafting()) {
+            guiGraphics.blit(ARROW_TEXTURE,x + 72, y + 35, 0, 0, this.menu.getScaledArrowProgress(), 16, 24, 16);
         }
     }
 
     public void toggleButtons(boolean enablePreviewButton, boolean enableCraftButton, boolean isPlaying) {
-        buttons.get(0).active = enablePreviewButton;
-        buttons.get(1).active = enableCraftButton;
-        buttons.get(0).setSprite(isPlaying && enablePreviewButton ? ICON_PAUSE : ICON_PLAY);
+        this.buttons.get(0).active = enablePreviewButton;
+        this.buttons.get(1).active = enableCraftButton;
+        this.buttons.get(0).setSprite(isPlaying && enablePreviewButton ? ICON_PAUSE : ICON_PLAY);
     }
 
     @Override

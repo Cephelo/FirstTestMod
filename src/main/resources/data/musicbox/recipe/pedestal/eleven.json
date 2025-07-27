@@ -1,0 +1,15 @@
+{
+  "type": "musicbox:pedestal",
+  "ingredients": [
+    {
+      "item": "minecraft:potato"
+    },
+    {
+      "item": "minecraft:echo_shard"
+    }
+  ],
+  "result": {
+    "id": "minecraft:apple"
+  },
+  "consumeHeldItem": false
+}

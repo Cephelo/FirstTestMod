@@ -1,7 +1,22 @@
 {
   "variants": {
-    "": {
-      "model": "musicbox:block/musicbox"
+    "status=idle,beacon_powered=false": {
+      "model": "musicbox:block/musicbox_idle"
+    },
+    "status=preview,beacon_powered=false": {
+      "model": "musicbox:block/musicbox_preview"
+    },
+    "status=crafting,beacon_powered=false": {
+      "model": "musicbox:block/musicbox_crafting"
+    },
+    "status=idle,beacon_powered=true": {
+      "model": "musicbox:block/musicbox_idle_b"
+    },
+    "status=preview,beacon_powered=true": {
+      "model": "musicbox:block/musicbox_preview_b"
+    },
+    "status=crafting,beacon_powered=true": {
+      "model": "musicbox:block/musicbox_crafting_b"
     }
   }
 }

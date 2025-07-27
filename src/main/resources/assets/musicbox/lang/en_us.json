@@ -10,9 +10,15 @@
   "item.musicbox.old_parchment": "Old Parchment",
   "item.musicbox.disclet": "Disclet",
   "trim_materal.musicbox.chorus": "Murichorum",
+  "sounds.musicbox.ore_sing": "Ghostly singing",
   "sounds.musicbox.preview_start": "Music Box plays tune",
   "sounds.musicbox.preview_stop": "Music Box stops",
   "sounds.musicbox.record_scratch": "Music Box scratches",
   "sounds.musicbox.crafting_shudder": "Music Box whines",
-  "sounds.musicbox.crafting_done": "Music Box finishes"
+  "sounds.musicbox.crafting_done": "Music Box finishes",
+  "sounds.musicbox.beacon_fail": "Music Box fails",
+  "sounds.musicbox.error": "Music Box fails",
+  "sounds.musicbox.pedestal_item_place": "Item plops",
+  "sounds.musicbox.pedestal_item_pickup": "Item plops",
+  "sounds.musicbox.pedestal_craft": "Item transforms"
 }

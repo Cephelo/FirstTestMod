@@ -38,7 +38,7 @@ public class MusicboxMenu extends AbstractContainerMenu {
         this.addSlot(new SlotItemHandler(blockEntity.itemHandler, 1, 54, 24));
         this.addSlot(new SlotItemHandler(blockEntity.itemHandler, 2, 34, 44));
         this.addSlot(new SlotItemHandler(blockEntity.itemHandler, 3, 54, 44));
-        this.addSlot(new SlotItemHandler(blockEntity.itemHandler, 4, 104, 34));
+        this.addSlot(new OutputSlotItemHandler(blockEntity.itemHandler, 4, 104, 34));
 
         addDataSlots(data);
     }
