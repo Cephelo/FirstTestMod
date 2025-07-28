@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/door_bottom_left_open",
+  "textures": {
+    "bottom": "musicbox:block/chorus_door_bottom",
+    "top": "musicbox:block/chorus_door_top"
+  }
+}

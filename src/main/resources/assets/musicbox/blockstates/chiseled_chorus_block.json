@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "musicbox:block/chiseled_chorus_block"
+    }
+  }
+}

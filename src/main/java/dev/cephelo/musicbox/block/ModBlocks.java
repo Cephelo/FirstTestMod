@@ -7,9 +7,9 @@ import dev.cephelo.musicbox.block.custom.PedestalBlock;
 import dev.cephelo.musicbox.item.ModItems;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.properties.BlockSetType;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredRegister;
@@ -52,6 +52,46 @@ public class ModBlocks {
                     .noOcclusion()
                     .sound(SoundType.BAMBOO_WOOD)
                     .strength(3f, 4f)
+            ));
+
+    public static final DeferredBlock<Block> CHISELED_CHORUS_BLOCK = registerBlock("chiseled_chorus_block", () -> new Block(BlockBehaviour.Properties.of()
+            .sound(SoundType.AMETHYST_CLUSTER)
+            .strength(3f, 4f)
+            .requiresCorrectToolForDrops()
+    ));
+
+    public static final DeferredBlock<Block> CUT_CHORUS_BLOCK = registerBlock("cut_chorus_block", () -> new Block(BlockBehaviour.Properties.of()
+            .sound(SoundType.AMETHYST_CLUSTER)
+            .strength(3f, 4f)
+            .requiresCorrectToolForDrops()
+    ));
+
+    public static final DeferredBlock<StairBlock> CUT_CHORUS_STAIRS = registerBlock("cut_chorus_stairs",
+            () -> new StairBlock(ModBlocks.CUT_CHORUS_BLOCK.get().defaultBlockState(), BlockBehaviour.Properties.of()
+                    .sound(SoundType.AMETHYST_CLUSTER)
+                    .strength(3f, 4f)
+                    .requiresCorrectToolForDrops()
+            ));
+
+    public static final DeferredBlock<SlabBlock> CUT_CHORUS_SLAB = registerBlock("cut_chorus_slab",
+            () -> new SlabBlock(BlockBehaviour.Properties.of()
+                    .sound(SoundType.AMETHYST_CLUSTER)
+                    .strength(3f, 4f)
+                    .requiresCorrectToolForDrops()
+            ));
+
+    public static final DeferredBlock<DoorBlock> CHORUS_DOOR = registerBlock("chorus_door",
+            () -> new DoorBlock(BlockSetType.COPPER, BlockBehaviour.Properties.of()
+                    .noOcclusion()
+                    .strength(3f, 4f)
+                    .requiresCorrectToolForDrops()
+            ));
+
+    public static final DeferredBlock<TrapDoorBlock> CHORUS_TRAPDOOR = registerBlock("chorus_trapdoor",
+            () -> new TrapDoorBlock(BlockSetType.COPPER, BlockBehaviour.Properties.of()
+                    .noOcclusion()
+                    .strength(3f, 4f)
+                    .requiresCorrectToolForDrops()
             ));
 
 

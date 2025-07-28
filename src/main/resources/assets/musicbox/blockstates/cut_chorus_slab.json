@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "musicbox:block/cut_chorus_slab"
+    },
+    "type=double": {
+      "model": "musicbox:block/cut_chorus_block"
+    },
+    "type=top": {
+      "model": "musicbox:block/cut_chorus_slab_top"
+    }
+  }
+}

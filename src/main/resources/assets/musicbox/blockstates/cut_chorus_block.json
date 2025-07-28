@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "musicbox:block/cut_chorus_block"
+    }
+  }
+}

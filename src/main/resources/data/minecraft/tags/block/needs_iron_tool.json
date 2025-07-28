@@ -3,6 +3,12 @@
   "values": [
     "musicbox:chorus_block",
     "musicbox:raw_chorus_block",
-    "musicbox:echo_pedestal"
+    "musicbox:echo_pedestal",
+    "musicbox:chiseled_chorus_block",
+    "musicbox:cut_chorus_block",
+    "musicbox:cut_chorus_stairs",
+    "musicbox:cut_chorus_slab",
+    "musicbox:chorus_door",
+    "musicbox:chorus_trapdoor"
   ]
 }

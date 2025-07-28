@@ -1,7 +1,41 @@
-{
-  "parent": "minecraft:block/cube_top",
-  "textures": {
-    "side": "musicbox:block/musicbox_idle",
-    "top": "minecraft:block/jukebox_top"
-  }
+{   
+	"parent": "block/block",
+	"render_type": "cutout",
+    "textures": {
+        "side": "musicbox:block/musicbox_idle",
+        "status_overlay": "musicbox:block/musicbox_blank",
+        "port_overlay": "musicbox:block/musicbox_port",
+        "particle": "musicbox:block/musicbox_idle"
+    },
+    "elements": [
+        {   "from": [ 0, 0, 0 ],
+            "to": [ 16, 16, 16 ],
+            "faces": {
+                "down":  { "uv": [ 0, 0, 16, 16 ], "texture": "#side", "cullface": "down" },
+                "up":    { "uv": [ 0, 0, 16, 16 ], "texture": "#side", "cullface": "up" },
+                "north": { "uv": [ 0, 0, 16, 16 ], "texture": "#side", "cullface": "north" },
+                "south": { "uv": [ 0, 0, 16, 16 ], "texture": "#side", "cullface": "south" },
+                "west":  { "uv": [ 0, 0, 16, 16 ], "texture": "#side", "cullface": "west" },
+                "east":  { "uv": [ 0, 0, 16, 16 ], "texture": "#side", "cullface": "east" }
+            }
+        },
+		{   "from": [ 0, 0, 0 ],
+            "to": [ 16, 16, 16 ],
+            "faces": {
+                "down":  { "uv": [ 0, 0, 16, 16 ], "texture": "#status_overlay", "cullface": "down" },
+                "up":    { "uv": [ 0, 0, 16, 16 ], "texture": "#status_overlay", "cullface": "up" },
+                "north": { "uv": [ 0, 0, 16, 16 ], "texture": "#status_overlay", "cullface": "north" },
+                "south": { "uv": [ 0, 0, 16, 16 ], "texture": "#status_overlay", "cullface": "south" },
+                "west":  { "uv": [ 0, 0, 16, 16 ], "texture": "#status_overlay", "cullface": "west" },
+                "east":  { "uv": [ 0, 0, 16, 16 ], "texture": "#status_overlay", "cullface": "east" }
+            }
+        },
+        {   "from": [ 0, 0, 0 ],
+            "to": [ 16, 16, 16 ],
+            "faces": {
+                "down": { "uv": [ 0, 0, 16, 16 ], "texture": "#port_overlay", "cullface": "down" },
+                "up": { "uv": [ 0, 0, 16, 16 ], "texture": "#port_overlay", "cullface": "up" }
+            }
+        }
+    ]
 }

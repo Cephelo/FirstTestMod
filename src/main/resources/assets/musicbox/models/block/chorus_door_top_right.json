@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/door_top_right",
+  "render_type": "cutout",
+  "textures": {
+    "bottom": "musicbox:block/chorus_door_bottom",
+    "top": "musicbox:block/chorus_door_top"
+  }
+}

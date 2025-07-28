@@ -5,6 +5,7 @@ import dev.cephelo.musicbox.block.entity.ModBlockEntities;
 import dev.cephelo.musicbox.block.entity.renderer.PedestalBlockEntityRenderer;
 import dev.cephelo.musicbox.handler.MBClickButtonPacket;
 import dev.cephelo.musicbox.handler.MBToggleButtonPacket;
+import dev.cephelo.musicbox.item.ModCreativeModTab;
 import dev.cephelo.musicbox.item.ModItems;
 import dev.cephelo.musicbox.recipe.ModRecipes;
 import dev.cephelo.musicbox.screens.ModMenuTypes;
@@ -84,6 +85,7 @@ public class MusicBoxMod {
         NeoForge.EVENT_BUS.register(this);
 
         // Register Items, Blocks and Menus
+        ModCreativeModTab.register(modEventBus);
         ModItems.register(modEventBus);
         ModBlocks.register(modEventBus);
         ModBlockEntities.register(modEventBus);
@@ -122,6 +124,12 @@ public class MusicBoxMod {
         }
         if (event.getTabKey() == CreativeModeTabs.BUILDING_BLOCKS) {
             event.accept(ModBlocks.CHORUS_BLOCK);
+            event.accept(ModBlocks.CHISELED_CHORUS_BLOCK);
+            event.accept(ModBlocks.CUT_CHORUS_BLOCK);
+            event.accept(ModBlocks.CUT_CHORUS_STAIRS);
+            event.accept(ModBlocks.CUT_CHORUS_SLAB);
+            event.accept(ModBlocks.CHORUS_DOOR);
+            event.accept(ModBlocks.CHORUS_TRAPDOOR);
         }
         if (event.getTabKey() == CreativeModeTabs.NATURAL_BLOCKS) {
             event.accept(ModBlocks.CHORUS_ORE);

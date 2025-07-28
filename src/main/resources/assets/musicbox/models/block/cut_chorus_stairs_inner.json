@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/inner_stairs",
+  "textures": {
+    "bottom": "musicbox:block/cut_chorus_block",
+    "side": "musicbox:block/cut_chorus_block",
+    "top": "musicbox:block/cut_chorus_block"
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "musicbox:block/chiseled_chorus_block"
+  }
+}
