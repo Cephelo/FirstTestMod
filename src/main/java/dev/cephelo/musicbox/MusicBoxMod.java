@@ -136,8 +136,12 @@ public class MusicBoxMod {
             event.accept(ModBlocks.RAW_CHORUS_BLOCK);
         }
         if (event.getTabKey() == CreativeModeTabs.FUNCTIONAL_BLOCKS) {
+            event.accept(ModBlocks.CHORUS_LAMP);
             event.accept(ModBlocks.MUSICBOX);
             event.accept(ModBlocks.ECHO_PEDESTAL);
+        }
+        if (event.getTabKey() == CreativeModeTabs.REDSTONE_BLOCKS) {
+            event.accept(ModBlocks.CHORUS_LAMP);
         }
     }
 

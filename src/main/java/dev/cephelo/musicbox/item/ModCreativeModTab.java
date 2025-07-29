@@ -31,6 +31,7 @@ public class ModCreativeModTab {
                         event.accept(ModBlocks.CUT_CHORUS_SLAB);
                         event.accept(ModBlocks.CHORUS_DOOR);
                         event.accept(ModBlocks.CHORUS_TRAPDOOR);
+                        event.accept(ModBlocks.CHORUS_LAMP);
                         event.accept(ModItems.RAW_CHORUS);
                         event.accept(ModItems.CHORUS_INGOT);
                         event.accept(ModItems.CHORUS_NUGGET);

@@ -29,22 +29,22 @@ public class ChorusOreBlock extends Block {
 
     @Override
     protected void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
-        sing(level, pos, random);
+        sing(level, pos, random, 0.9);
     }
 
     @Override
     protected ItemInteractionResult useItemOn(
             ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult
     ) {
-        if (level instanceof ServerLevel serverLevel) sing(serverLevel, pos, level.getRandom());
+        if (level instanceof ServerLevel serverLevel) sing(serverLevel, pos, level.getRandom(), 0.9);
 
         return stack.getItem() instanceof BlockItem && new BlockPlaceContext(player, hand, stack, hitResult).canPlace()
                 ? ItemInteractionResult.SKIP_DEFAULT_BLOCK_INTERACTION
                 : ItemInteractionResult.SUCCESS;
     }
 
-    private static void sing(ServerLevel level, BlockPos pos, RandomSource random) {
-        if (Math.random() < 0.9)  {
+    public static void sing(ServerLevel level, BlockPos pos, RandomSource random, double chance) {
+        if (Math.random() <= chance)  {
             // Pitch is random between 0.55 and 0.85 or 1.4 and 1.7
             level.playSound(null, pos, ModSounds.ORE_SING.get(), SoundSource.BLOCKS, 1,
                     (random.nextFloat() - random.nextFloat()) * 0.15F + 0.7F + (random.nextBoolean() ? 0.85F : 0));

@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "lit=false": {
+      "model": "musicbox:block/chorus_lamp"
+    },
+    "lit=true": {
+      "model": "musicbox:block/chorus_lamp_on"
+    }
+  }
+}

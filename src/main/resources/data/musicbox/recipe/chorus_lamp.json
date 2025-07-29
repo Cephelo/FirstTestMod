@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "key": {
+    "F": {
+  	  "item": "minecraft:chorus_flower"
+  	},
+    "L": {
+  	  "item": "minecraft:redstone_lamp"
+  	},
+    "C": {
+  	  "item": "musicbox:chorus_ingot"
+  	},
+    "R": {
+  	  "item": "musicbox:raw_chorus"
+  	}
+  },
+  "pattern": [
+    "CRC",
+    "RFR",
+    "CLC"
+  ],
+  "result": {
+    "id": "musicbox:chorus_lamp"
+  },
+  "show_notification": true
+}

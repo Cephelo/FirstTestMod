@@ -1,6 +1,7 @@
 package dev.cephelo.musicbox.block;
 
 import dev.cephelo.musicbox.MusicBoxMod;
+import dev.cephelo.musicbox.block.custom.ChorusLampBlock;
 import dev.cephelo.musicbox.block.custom.ChorusOreBlock;
 import dev.cephelo.musicbox.block.custom.MusicboxBlock;
 import dev.cephelo.musicbox.block.custom.PedestalBlock;
@@ -9,12 +10,16 @@ import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockSetType;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
 import java.util.function.Supplier;
+import java.util.function.ToIntFunction;
 
 public class ModBlocks {
     public static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks(MusicBoxMod.MODID);
@@ -23,12 +28,14 @@ public class ModBlocks {
             .sound(SoundType.AMETHYST_CLUSTER)
             .strength(3f, 4f)
             .requiresCorrectToolForDrops()
+            .instrument(NoteBlockInstrument.CHIME)
     ));
 
     public static final DeferredBlock<Block> RAW_CHORUS_BLOCK = registerBlock("raw_chorus_block", () -> new Block(BlockBehaviour.Properties.of()
             .sound(SoundType.AMETHYST_CLUSTER)
             .strength(3f, 4f)
             .requiresCorrectToolForDrops()
+            .instrument(NoteBlockInstrument.FLUTE)
     ));
 
     public static final DeferredBlock<Block> CHORUS_ORE = registerBlock("chorus_ore",
@@ -37,6 +44,7 @@ public class ModBlocks {
                     .strength(3f, 4f)
                     .requiresCorrectToolForDrops()
                     .randomTicks()
+                    .instrument(NoteBlockInstrument.BASEDRUM)
     ));
 
     public static final DeferredBlock<Block> ECHO_PEDESTAL = registerBlock("echo_pedestal",
@@ -58,12 +66,14 @@ public class ModBlocks {
             .sound(SoundType.AMETHYST_CLUSTER)
             .strength(3f, 4f)
             .requiresCorrectToolForDrops()
+            .instrument(NoteBlockInstrument.CHIME)
     ));
 
     public static final DeferredBlock<Block> CUT_CHORUS_BLOCK = registerBlock("cut_chorus_block", () -> new Block(BlockBehaviour.Properties.of()
             .sound(SoundType.AMETHYST_CLUSTER)
             .strength(3f, 4f)
             .requiresCorrectToolForDrops()
+            .instrument(NoteBlockInstrument.CHIME)
     ));
 
     public static final DeferredBlock<StairBlock> CUT_CHORUS_STAIRS = registerBlock("cut_chorus_stairs",
@@ -94,6 +104,18 @@ public class ModBlocks {
                     .requiresCorrectToolForDrops()
             ));
 
+    public static final DeferredBlock<Block> CHORUS_LAMP = registerBlock("chorus_lamp",
+            () -> new ChorusLampBlock(BlockBehaviour.Properties.of()
+                    .lightLevel(litBlockEmission(15))
+                    .sound(SoundType.GLASS)
+                    .strength(3f, 4f)
+                    .requiresCorrectToolForDrops()
+                    .randomTicks()
+    ));
+
+    private static ToIntFunction<BlockState> litBlockEmission(int lightValue) {
+        return p_50763_ -> p_50763_.getValue(BlockStateProperties.LIT) ? lightValue : 0;
+    }
 
     private static <T extends Block> DeferredBlock<T> registerBlock(String name, Supplier<T> block) {
         DeferredBlock<T> toReturn = BLOCKS.register(name, block);
