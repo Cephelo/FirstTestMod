@@ -27,7 +27,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Optional;
 
 public class PedestalBlock extends BaseEntityBlock {
-    public static final VoxelShape SHAPE = Block.box(2, 0, 2, 14, 13, 14);
+    public static final VoxelShape SHAPE = Block.box(4, 0, 4, 12, 13, 12);
     public static final MapCodec<PedestalBlock> CODEC = simpleCodec(PedestalBlock::new);
 
     public PedestalBlock(Properties properties) {

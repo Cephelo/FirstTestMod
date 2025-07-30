@@ -32,11 +32,12 @@ public class ModCreativeModTab {
                         event.accept(ModBlocks.CHORUS_DOOR);
                         event.accept(ModBlocks.CHORUS_TRAPDOOR);
                         event.accept(ModBlocks.CHORUS_LAMP);
+                        event.accept(ModBlocks.CRYSTAL_BLOCK);
                         event.accept(ModItems.RAW_CHORUS);
                         event.accept(ModItems.CHORUS_INGOT);
                         event.accept(ModItems.CHORUS_NUGGET);
+                        event.accept(ModItems.CRYSTAL_SHARD);
                         event.accept(ModItems.OLD_PARCHMENT);
-                        event.accept(ModItems.DISCLET);
                         event.accept(Items.ECHO_SHARD);
                     }).build());
 

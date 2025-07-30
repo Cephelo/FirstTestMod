@@ -1,0 +1,23 @@
+{
+  "type": "musicbox:musicbox",
+  "ingredients": [
+    {
+      "item": "minecraft:glow_ink_sac"
+    },
+    {
+      "item": "musicbox:crystal_shard"
+    },
+    {
+      "item": "musicbox:chorus_ingot"
+    },
+    {
+      "item": "minecraft:glowstone_dust"
+    }
+  ],
+  "result": {
+    "id": "minecraft:music_disc_mall"
+  },
+  "soundEvent": "music_disc.mall",
+  "enablePreivew": true,
+  "needsBeacon": false
+}

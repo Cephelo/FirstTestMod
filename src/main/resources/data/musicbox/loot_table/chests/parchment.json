@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:chest",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "musicbox:old_parchment"
+        }
+      ],
+      "rolls": {
+        "type": "minecraft:constant",
+        "value": 1.0
+      }
+    }
+  ],
+  "random_sequence": "minecraft:chests/ancient_city"
+}

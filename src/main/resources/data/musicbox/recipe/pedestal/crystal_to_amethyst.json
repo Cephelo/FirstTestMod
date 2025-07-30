@@ -1,0 +1,15 @@
+{
+  "type": "musicbox:pedestal",
+  "ingredients": [
+    {
+      "item": "musicbox:crystal_shard"
+    },
+    {
+      "item": "minecraft:echo_shard"
+    }
+  ],
+  "result": {
+    "id": "minecraft:amethyst_shard"
+  },
+  "consumeHeldItem": false
+}

@@ -1,0 +1,9 @@
+{
+  "asset_name": "musicbox-crystal",
+  "description": {
+    "color": "#7ba0a9",
+    "translate": "trim_material.musicbox.crystal"
+  },
+  "ingredient": "musicbox:crystal_shard",
+  "item_model_index": -1.0
+}

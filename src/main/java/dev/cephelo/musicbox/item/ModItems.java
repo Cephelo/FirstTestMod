@@ -22,7 +22,7 @@ public class ModItems {
     public static final DeferredItem<Item> OLD_PARCHMENT = ITEMS.register("old_parchment",
             () -> new Item(new Item.Properties()));
 
-    public static final DeferredItem<Item> DISCLET = ITEMS.register("disclet",
+    public static final DeferredItem<Item> CRYSTAL_SHARD = ITEMS.register("crystal_shard",
             () -> new Item(new Item.Properties()));
 
     public static void register(IEventBus eventBus) {

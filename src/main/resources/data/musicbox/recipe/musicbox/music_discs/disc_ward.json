@@ -1,0 +1,23 @@
+{
+  "type": "musicbox:musicbox",
+  "ingredients": [
+    {
+      "item": "minecraft:slime_ball"
+    },
+    {
+      "item": "musicbox:crystal_shard"
+    },
+    {
+      "item": "musicbox:chorus_ingot"
+    },
+    {
+      "item": "minecraft:glowstone_dust"
+    }
+  ],
+  "result": {
+    "id": "minecraft:music_disc_ward"
+  },
+  "soundEvent": "music_disc.ward",
+  "enablePreivew": true,
+  "needsBeacon": false
+}

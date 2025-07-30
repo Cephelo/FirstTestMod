@@ -1,0 +1,23 @@
+{
+  "type": "musicbox:musicbox",
+  "ingredients": [
+    {
+      "item": "minecraft:ominous_trial_key"
+    },
+    {
+      "item": "musicbox:crystal_shard"
+    },
+    {
+      "item": "musicbox:chorus_ingot"
+    },
+    {
+      "item": "minecraft:glowstone_dust"
+    }
+  ],
+  "result": {
+    "id": "minecraft:music_disc_creator"
+  },
+  "soundEvent": "music_disc.creator",
+  "enablePreivew": true,
+  "needsBeacon": false
+}

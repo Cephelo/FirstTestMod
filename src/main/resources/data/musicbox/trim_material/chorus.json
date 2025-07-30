@@ -1,0 +1,9 @@
+{
+  "asset_name": "musicbox-chorus",
+  "description": {
+    "color": "#5c335c",
+    "translate": "trim_material.musicbox.chorus"
+  },
+  "ingredient": "musicbox:chorus_ingot",
+  "item_model_index": -1.0
+}

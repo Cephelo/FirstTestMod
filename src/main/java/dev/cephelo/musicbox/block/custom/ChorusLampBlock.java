@@ -3,6 +3,7 @@ package dev.cephelo.musicbox.block.custom;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.RedstoneLampBlock;
@@ -18,7 +19,8 @@ public class ChorusLampBlock extends RedstoneLampBlock {
     @Override
     protected void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
         // Will sing if lit and signal strength is 15
-        if (state.getValue(LIT) && level.getDirectSignalTo(pos) >= 15) ChorusOreBlock.sing(level, pos, random, 1.0);
+        if (state.getValue(LIT) && level.getDirectSignalTo(pos) >= 15)
+            sing(level, pos, random);
     }
 
     // Same as RedstoneLampBlock but with one addition
@@ -31,10 +33,13 @@ public class ChorusLampBlock extends RedstoneLampBlock {
                     level.scheduleTick(pos, this, 4);
                 } else {
                     level.setBlock(pos, state.cycle(LIT), 2);
-                    if (level instanceof ServerLevel serverLevel && flag == false)
-                        ChorusOreBlock.sing(serverLevel, pos, level.random, 1.0);
+                    if (flag == false) sing(level, pos, level.random);
                 }
             }
         }
+    }
+
+    private void sing(Level level, BlockPos pos, RandomSource random) {
+        ChorusOreBlock.sing(level, pos, random, 1.0);
     }
 }

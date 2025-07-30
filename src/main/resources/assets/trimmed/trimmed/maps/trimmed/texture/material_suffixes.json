@@ -1,0 +1,7 @@
+{
+  "__comment": "Map of palette texture location to suffix for generated textures",
+  "values": {
+    "musicbox:trims/color_palettes/chorus": "musicbox-chorus",
+    "musicbox:trims/color_palettes/crystal": "musicbox-crystal"
+  }
+}

@@ -62,13 +62,13 @@ public class MusicboxMenu extends AbstractContainerMenu {
     }
 
     public void pressPreviewButton() {
-        MusicBoxMod.LOGGER.info("pressPreviewButton");
+        //MusicBoxMod.LOGGER.info("pressPreviewButton");
         PacketDistributor.sendToServer(new MBClickButtonPacket(this.blockEntity.getBlockPos(), 0));
         //blockEntity.previewButton();
     }
 
     public void pressCraftButton() {
-        MusicBoxMod.LOGGER.info("pressCraftButton");
+        //MusicBoxMod.LOGGER.info("pressCraftButton");
         PacketDistributor.sendToServer(new MBClickButtonPacket(this.blockEntity.getBlockPos(), 1));
         //blockEntity.craftButton();
     }

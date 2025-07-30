@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
-    "musicbox:chorus_ingot"
+    "musicbox:chorus_ingot",
+    "musicbox:crystal_shard"
   ]
 }

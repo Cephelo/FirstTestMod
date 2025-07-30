@@ -13,10 +13,13 @@
   	},
     "R": {
   	  "item": "musicbox:raw_chorus"
+  	},
+    "S": {
+  	  "item": "musicbox:crystal_shard"
   	}
   },
   "pattern": [
-    "CRC",
+    "CSC",
     "RFR",
     "CLC"
   ],

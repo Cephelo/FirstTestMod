@@ -1,0 +1,15 @@
+{
+  "type": "musicbox:pedestal",
+  "ingredients": [
+    {
+      "item": "minecraft:sculk_sensor"
+    },
+    {
+      "item": "minecraft:amethyst_shard"
+    }
+  ],
+  "result": {
+    "id": "minecraft:calibrated_sculk_sensor"
+  },
+  "consumeHeldItem": true
+}

@@ -196,7 +196,11 @@ public class MusicboxBlockEntity extends BlockEntity implements MenuProvider {
             }
         }
 
-        if (isPlayingPreviewSound) previewProgress++;
+        if (isPlayingPreviewSound) {
+            previewProgress++;
+            // Loop preview sound if it's too short
+            if (!manager.isActive(previewSound)) playPreviewSound(progress >= 2, false);
+        }
 
         if (progress == 0 && itemHandler.getStackInSlot(OUTPUT_SLOT).isEmpty()) {
             MusicboxRecipe recipe = checkRecipe();
@@ -231,7 +235,7 @@ public class MusicboxBlockEntity extends BlockEntity implements MenuProvider {
     }
 
     private void previewButton() {
-        if (previewProgress < 2) this.playPreviewSound(false);
+        if (previewProgress < 2) this.playPreviewSound(false, true);
         else this.stopPreviewSound(true, false);
     }
 
@@ -255,7 +259,7 @@ public class MusicboxBlockEntity extends BlockEntity implements MenuProvider {
             itemHandler.extractItem(INPUT4_SLOT, 1, false);
 
             itemBeingCrafted = recipe.output().copy();
-            playPreviewSound(true);
+            playPreviewSound(true, true);
 
             if (level != null) level.setBlock(this.getBlockPos(), this.getBlockState().setValue(STATUS, MusicboxStatus.CRAFTING), 3);
         } else {
@@ -280,20 +284,20 @@ public class MusicboxBlockEntity extends BlockEntity implements MenuProvider {
         return recipe.map(RecipeHolder::value).orElse(null);//recipe.isEmpty() ? null : recipe.get().value();
     }
 
-    private void playPreviewSound(boolean spedUp) {
+    private void playPreviewSound(boolean spedUp, boolean isFirstLoop) {
         MusicboxRecipe recipe = checkRecipe();
         if (recipe != null && itemHandler.getStackInSlot(OUTPUT_SLOT).isEmpty()) {
-            stopPreviewSound(false, spedUp);
+            if (isFirstLoop) stopPreviewSound(false, spedUp);
 
             if (!beaconCheck(recipe.beacon())) return;
 
-            if (this.level != null)
+            if (this.level != null && isFirstLoop)
                 this.level.playSound(null, this.getBlockPos(), ModSounds.PREVIEW_START.get(), SoundSource.RECORDS);
 
             // play recipe.sound on SoundSource, pitch spedUp+1
             SoundEvent sound = BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.tryParse(recipe.sound()));
             if (sound != null) {
-                previewSound = new SimpleSoundInstance(sound, SoundSource.RECORDS, 0.8f, (spedUp ? 2 : 1), SoundInstance.createUnseededRandom(), this.getBlockPos());
+                previewSound = new SimpleSoundInstance(sound, SoundSource.RECORDS, 1, (spedUp ? 2 : 1), SoundInstance.createUnseededRandom(), this.getBlockPos());
                 manager.play(previewSound);
                 isPlayingPreviewSound = true;
 
@@ -302,6 +306,8 @@ public class MusicboxBlockEntity extends BlockEntity implements MenuProvider {
         } else {
             // play error sound
             if (level != null) this.level.playSound(null, this.getBlockPos(), ModSounds.ERROR.get(), SoundSource.RECORDS);
+            if (recipe != null) MusicBoxMod.LOGGER.info("could not play sound {} | spedUp: {}", recipe.sound(), spedUp);
+            else MusicBoxMod.LOGGER.info("could not play sound [null] | spedUp: {}", spedUp);
         }
     }
 

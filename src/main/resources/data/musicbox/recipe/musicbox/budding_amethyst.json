@@ -1,0 +1,23 @@
+{
+  "type": "musicbox:musicbox",
+  "ingredients": [
+    {
+      "item": "minecraft:glowstone_dust"
+    },
+    {
+      "item": "musicbox:crystal_shard"
+    },
+    {
+      "item": "musicbox:crystal_shard"
+    },
+    {
+      "item": "minecraft:amethyst_block"
+    }
+  ],
+  "result": {
+    "id": "minecraft:budding_amethyst"
+  },
+  "soundEvent": "block.amethyst_block.resonate",
+  "enablePreivew": true,
+  "needsBeacon": true
+}

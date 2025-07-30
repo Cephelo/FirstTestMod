@@ -12,6 +12,7 @@
     "musicbox:cut_chorus_slab",
     "musicbox:chorus_door",
     "musicbox:chorus_trapdoor",
-    "musicbox:chorus_lamp"
+    "musicbox:chorus_lamp",
+    "musicbox:crystal_block"
   ]
 }

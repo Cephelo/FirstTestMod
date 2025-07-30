@@ -9,16 +9,16 @@
   	  "item": "minecraft:deepslate_tiles"
   	},
     "S": {
-  	  "item": "minecraft:deepslate_tile_slab"
+  	  "item": "musicbox:crystal_shard"
   	},
     "C": {
   	  "item": "musicbox:chorus_block"
   	}
   },
   "pattern": [
-    "SES",
-    "SDS",
-    "SCS"
+    " S ",
+    "DED",
+    "DCD"
   ],
   "result": {
     "id": "musicbox:echo_pedestal"

@@ -8,6 +8,7 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.ItemInteractionResult;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
@@ -18,8 +19,6 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
-
-import static dev.cephelo.musicbox.block.custom.MusicboxBlock.BEACON;
 
 public class ChorusOreBlock extends Block {
     public ChorusOreBlock(BlockBehaviour.Properties properties) {
@@ -36,14 +35,16 @@ public class ChorusOreBlock extends Block {
     protected ItemInteractionResult useItemOn(
             ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult
     ) {
-        if (level instanceof ServerLevel serverLevel) sing(serverLevel, pos, level.getRandom(), 0.9);
+        sing(level, pos, level.getRandom(), 0.9);
 
         return stack.getItem() instanceof BlockItem && new BlockPlaceContext(player, hand, stack, hitResult).canPlace()
                 ? ItemInteractionResult.SKIP_DEFAULT_BLOCK_INTERACTION
                 : ItemInteractionResult.SUCCESS;
     }
 
-    public static void sing(ServerLevel level, BlockPos pos, RandomSource random, double chance) {
+    public static void sing(Level pLevel, BlockPos pos, RandomSource random, double chance) {
+        if (!(pLevel instanceof  ServerLevel level)) return;
+
         if (Math.random() <= chance)  {
             // Pitch is random between 0.55 and 0.85 or 1.4 and 1.7
             level.playSound(null, pos, ModSounds.ORE_SING.get(), SoundSource.BLOCKS, 1,

@@ -113,6 +113,13 @@ public class ModBlocks {
                     .randomTicks()
     ));
 
+    public static final DeferredBlock<Block> CRYSTAL_BLOCK = registerBlock("crystal_block", () -> new AmethystBlock(BlockBehaviour.Properties.of()
+            .sound(SoundType.AMETHYST)
+            .strength(3f, 4f)
+            .requiresCorrectToolForDrops()
+            .instrument(NoteBlockInstrument.CHIME)
+    ));
+
     private static ToIntFunction<BlockState> litBlockEmission(int lightValue) {
         return p_50763_ -> p_50763_.getValue(BlockStateProperties.LIT) ? lightValue : 0;
     }

@@ -1,0 +1,24 @@
+{
+  "type": "musicbox:musicbox",
+  "ingredients": [
+    {
+      "item": "minecraft:echo_shard"
+    },
+    {
+      "item": "musicbox:crystal_shard"
+    },
+    {
+      "item": "musicbox:crystal_shard"
+    },
+    {
+      "item": "minecraft:sculk_catalyst"
+    }
+  ],
+  "result": {
+    "id": "minecraft:echo_shard",
+    "count": 2
+  },
+  "soundEvent": "block.sculk_sensor.clicking",
+  "enablePreivew": true,
+  "needsBeacon": true
+}

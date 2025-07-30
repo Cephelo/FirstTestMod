@@ -31,7 +31,7 @@
         "name": "entity.enderman.stare",
         "type": "event",
         "pitch": 2,
-        "volume": 0.8
+        "volume": 1.0
       }
     ]
   },
