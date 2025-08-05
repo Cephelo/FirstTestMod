@@ -34,11 +34,11 @@ public class MusicboxMenu extends AbstractContainerMenu {
         addPlayerHotbar(inv);
 
         // Create Slots
-        this.addSlot(new SlotItemHandler(blockEntity.itemHandler, 0, 34, 24));
+        this.addSlot(new SlotItemHandler(blockEntity.itemHandler, 0, 32, 24));
         this.addSlot(new SlotItemHandler(blockEntity.itemHandler, 1, 54, 24));
-        this.addSlot(new SlotItemHandler(blockEntity.itemHandler, 2, 34, 44));
-        this.addSlot(new SlotItemHandler(blockEntity.itemHandler, 3, 54, 44));
-        this.addSlot(new OutputSlotItemHandler(blockEntity.itemHandler, 4, 104, 34));
+        this.addSlot(new SlotItemHandler(blockEntity.itemHandler, 2, 32, 46));
+        this.addSlot(new SlotItemHandler(blockEntity.itemHandler, 3, 54, 46));
+        this.addSlot(new OutputSlotItemHandler(blockEntity.itemHandler, 4, 116, 35));
 
         addDataSlots(data);
     }
@@ -50,8 +50,8 @@ public class MusicboxMenu extends AbstractContainerMenu {
 
     public int getScaledArrowProgress() {
         int progress = this.data.get(0);
-        int maxProgress = this.data.get(1);
-        int arrowPixelSize = 24;
+        int maxProgress = this.data.get(1) - 5;
+        int arrowPixelSize = 40;
 
         return (maxProgress != 0 && progress != 0) ? progress * arrowPixelSize / maxProgress : 0;
     }

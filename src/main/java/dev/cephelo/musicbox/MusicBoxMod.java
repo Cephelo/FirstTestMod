@@ -11,6 +11,7 @@ import dev.cephelo.musicbox.recipe.ModRecipes;
 import dev.cephelo.musicbox.screens.ModMenuTypes;
 import dev.cephelo.musicbox.screens.custom.MusicboxScreen;
 import dev.cephelo.musicbox.sound.ModSounds;
+import dev.cephelo.musicbox.worldgen.ModConfiguredFeatures;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
@@ -61,6 +62,7 @@ public class MusicBoxMod {
         ModMenuTypes.register(modEventBus);
         ModRecipes.register(modEventBus);
         ModSounds.register(modEventBus);
+        ModConfiguredFeatures.register(modEventBus);
 
         // Register the item to a creative tab
         modEventBus.addListener(this::addCreative);

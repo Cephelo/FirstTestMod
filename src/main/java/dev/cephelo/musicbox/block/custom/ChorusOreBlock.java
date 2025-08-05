@@ -28,14 +28,14 @@ public class ChorusOreBlock extends Block {
 
     @Override
     protected void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
-        sing(level, pos, random, 0.9);
+        sing(level, pos, random, 1.0);
     }
 
     @Override
     protected ItemInteractionResult useItemOn(
             ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult
     ) {
-        sing(level, pos, level.getRandom(), 0.9);
+        sing(level, pos, level.getRandom(), 1.0);
 
         return stack.getItem() instanceof BlockItem && new BlockPlaceContext(player, hand, stack, hitResult).canPlace()
                 ? ItemInteractionResult.SKIP_DEFAULT_BLOCK_INTERACTION

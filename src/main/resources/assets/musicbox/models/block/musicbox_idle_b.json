@@ -1,6 +1,7 @@
 {
   "parent": "musicbox:block/musicbox_idle",
   "textures": {
-    "side": "musicbox:block/musicbox_idle_b"
+    "side": "musicbox:block/musicbox_idle_b",
+    "port_overlay": "musicbox:block/musicbox_port_beacon"
   }
 }

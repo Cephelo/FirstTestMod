@@ -31,7 +31,7 @@
         "name": "entity.enderman.stare",
         "type": "event",
         "pitch": 2,
-        "volume": 1.0
+        "volume": 1.2
       }
     ]
   },
@@ -72,7 +72,7 @@
       {
         "name": "block.beacon.ambient",
         "type": "event",
-        "volume": 2
+        "volume": 3
       }
     ]
   },

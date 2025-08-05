@@ -40,7 +40,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BeaconBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.items.ItemStackHandler;
 import net.neoforged.neoforge.network.PacketDistributor;
@@ -259,7 +258,7 @@ public class MusicboxBlockEntity extends BlockEntity implements MenuProvider {
             itemHandler.extractItem(INPUT4_SLOT, 1, false);
 
             itemBeingCrafted = recipe.output().copy();
-            playPreviewSound(true, true);
+            playPreviewSound(true, true, recipe);
 
             if (level != null) level.setBlock(this.getBlockPos(), this.getBlockState().setValue(STATUS, MusicboxStatus.CRAFTING), 3);
         } else {
@@ -285,7 +284,11 @@ public class MusicboxBlockEntity extends BlockEntity implements MenuProvider {
     }
 
     private void playPreviewSound(boolean spedUp, boolean isFirstLoop) {
-        MusicboxRecipe recipe = checkRecipe();
+        playPreviewSound(spedUp, isFirstLoop, null);
+    }
+
+        private void playPreviewSound(boolean spedUp, boolean isFirstLoop, MusicboxRecipe recipe) {
+        /*MusicboxRecipe*/if (recipe == null) recipe = checkRecipe();
         if (recipe != null && itemHandler.getStackInSlot(OUTPUT_SLOT).isEmpty()) {
             if (isFirstLoop) stopPreviewSound(false, spedUp);
 
@@ -343,7 +346,7 @@ public class MusicboxBlockEntity extends BlockEntity implements MenuProvider {
 
     private void enableButtons(boolean enablePreviewButton, boolean enableCraftButton) {
         // enable/disable buttons
-        PacketDistributor.sendToServer(new MBToggleButtonPacket(this.getBlockPos(), enablePreviewButton ? 1 : 0, enableCraftButton ? 1 : 0, isPlayingPreviewSound ? 1 : 0));
+        PacketDistributor.sendToServer(new MBToggleButtonPacket(this.getBlockPos(), enablePreviewButton ? 1 : 0, enableCraftButton ? 1 : 0, isPlayingPreviewSound ? 1 : 0, this.getBlockState().getValue(BEACON) ? 1 : 0));
     }
 
     // Client-Server Sync

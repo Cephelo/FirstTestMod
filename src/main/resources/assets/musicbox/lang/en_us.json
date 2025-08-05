@@ -26,9 +26,11 @@
   "sounds.musicbox.record_scratch": "Music Box scratches",
   "sounds.musicbox.crafting_shudder": "Music Box whines",
   "sounds.musicbox.crafting_done": "Music Box finishes",
-  "sounds.musicbox.beacon_fail": "Music Box fails",
+  "sounds.musicbox.beacon_fail": "Music Box needs energy",
   "sounds.musicbox.error": "Music Box fails",
   "sounds.musicbox.pedestal_item_place": "Item plops",
   "sounds.musicbox.pedestal_item_pickup": "Item plops",
-  "sounds.musicbox.pedestal_craft": "Item transforms"
+  "sounds.musicbox.pedestal_craft": "Item transforms",
+  "jeitooltip.musicbox.beacon": "Requires Beacon",
+  "jeitooltip.musicbox.consumes": "Consumes Item"
 }

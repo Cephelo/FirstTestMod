@@ -115,30 +115,5 @@ public record MusicboxRecipe (NonNullList<Ingredient> inputs, ItemStack output, 
         public StreamCodec<RegistryFriendlyByteBuf, MusicboxRecipe> streamCodec() {
             return STREAM_CODEC;
         }
-
-//        private static MusicboxRecipe fromNetwork(RegistryFriendlyByteBuf buffer) {
-//            int i = buffer.readVarInt();
-//            NonNullList<Ingredient> nonnulllist = NonNullList.withSize(i, Ingredient.EMPTY);
-//            nonnulllist.replaceAll(p_319735_ -> Ingredient.CONTENTS_STREAM_CODEC.decode(buffer));
-//            ItemStack itemstack = ItemStack.STREAM_CODEC.decode(buffer);
-//
-//            Boolean p = buffer.readBoolean();
-//            Boolean aer = buffer.readBoolean();
-//            String s = buffer.readUtf();
-//
-//            return new MusicboxRecipe(nonnulllist, itemstack, p, aer, s);
-//        }
-//
-//        private static void toNetwork(RegistryFriendlyByteBuf buffer, MusicboxRecipe recipe) {
-//            buffer.writeUtf(recipe.sound);
-//            buffer.writeBoolean(recipe.preview);
-//            buffer.writeBoolean(recipe.beacon);
-//
-//            for (Ingredient ingredient : recipe.inputs) {
-//                Ingredient.CONTENTS_STREAM_CODEC.encode(buffer, ingredient);
-//            }
-//
-//            ItemStack.STREAM_CODEC.encode(buffer, recipe.output);
-//        }
     }
 }

@@ -17,11 +17,15 @@ import net.minecraft.world.inventory.Slot;
 
 import java.util.ArrayList;
 
+import static dev.cephelo.musicbox.block.custom.MusicboxBlock.BEACON;
+
 public class MusicboxScreen extends AbstractContainerScreen<MusicboxMenu> /*implements RecipeUpdateListener*/ {
     private static final ResourceLocation GUI_TEXTURE =
             ResourceLocation.fromNamespaceAndPath(MusicBoxMod.MODID,"textures/gui/musicbox_gui.png");
     private static final ResourceLocation ARROW_TEXTURE =
             ResourceLocation.fromNamespaceAndPath(MusicBoxMod.MODID,"textures/gui/arrow_progress.png");
+    private static final ResourceLocation BEACON_TEXTURE =
+            ResourceLocation.fromNamespaceAndPath(MusicBoxMod.MODID,"textures/gui/musicbox_beacon_gui.png");
     private static final ResourceLocation ICON_PLAY =
             ResourceLocation.fromNamespaceAndPath(MusicBoxMod.MODID,"textures/gui/icon_play.png");
     private static final ResourceLocation ICON_PAUSE =
@@ -34,6 +38,7 @@ public class MusicboxScreen extends AbstractContainerScreen<MusicboxMenu> /*impl
     //private boolean buttonClicked;
 
     private final ArrayList<IconButton> buttons = new ArrayList<>();
+    private boolean hasBeacon;
 
     public MusicboxScreen(MusicboxMenu menu, Inventory playerInventory, Component title) {
         super(menu, playerInventory, title);
@@ -56,9 +61,9 @@ public class MusicboxScreen extends AbstractContainerScreen<MusicboxMenu> /*impl
 //        );
 //        this.addWidget(this.recipeBookComponent);
 
-        IconButton previewButton = new IconButton(leftPos + 104, topPos + 58, 16, 16, Component.empty(),
+        IconButton previewButton = new IconButton(leftPos + 116, topPos + 59, 16, 16, Component.empty(),
                 this.menu.isPlayingPreviewSound() && !menu.isCrafting() ? ICON_PAUSE : ICON_PLAY, m -> this.menu.pressPreviewButton());
-        IconButton craftButton = new IconButton(leftPos + 128, topPos + 34, 16, 16, Component.empty(),
+        IconButton craftButton = new IconButton(leftPos + 140, topPos + 35, 16, 16, Component.empty(),
                 ICON_CRAFT, b -> this.menu.pressCraftButton());
 
         this.addRenderableWidget(previewButton);
@@ -67,7 +72,7 @@ public class MusicboxScreen extends AbstractContainerScreen<MusicboxMenu> /*impl
         this.buttons.add(previewButton);
         this.buttons.add(craftButton);
 
-        toggleButtons(false, false, false);
+        toggleButtons(false, false, false, false);
     }
 
 //    @Override
@@ -88,19 +93,28 @@ public class MusicboxScreen extends AbstractContainerScreen<MusicboxMenu> /*impl
         guiGraphics.blit(GUI_TEXTURE, x, y, 0, 0, imageWidth, imageHeight);
 
         renderProgressArrow(guiGraphics, x, y);
+        renderBeaconSprite(guiGraphics, x, y);
     }
 
     // Progress Arrow/Texture
     private void renderProgressArrow(GuiGraphics guiGraphics, int x, int y) {
-        if(this.menu.isCrafting()) {
-            guiGraphics.blit(ARROW_TEXTURE,x + 72, y + 35, 0, 0, this.menu.getScaledArrowProgress(), 16, 24, 16);
+        if (this.menu.isCrafting()) {
+            guiGraphics.blit(ARROW_TEXTURE,x + 71, y + 23, 0, 0, this.menu.getScaledArrowProgress(), 41, 40, 41);
         }
     }
 
-    public void toggleButtons(boolean enablePreviewButton, boolean enableCraftButton, boolean isPlaying) {
+    // If block has active lvl4 beacon under it
+    private void renderBeaconSprite(GuiGraphics guiGraphics, int x, int y) {
+        if (this.hasBeacon) {
+            guiGraphics.blit(BEACON_TEXTURE,x + 45, y + 37, 0, 0, 12, 12, 256, 256);
+        }
+    }
+
+    public void toggleButtons(boolean enablePreviewButton, boolean enableCraftButton, boolean isPlaying, boolean hasBeacon) {
         this.buttons.get(0).active = enablePreviewButton;
         this.buttons.get(1).active = enableCraftButton;
         this.buttons.get(0).setSprite(isPlaying && enablePreviewButton ? ICON_PAUSE : ICON_PLAY);
+        this.hasBeacon = hasBeacon;
     }
 
     @Override
