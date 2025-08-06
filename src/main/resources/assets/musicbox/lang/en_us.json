@@ -3,10 +3,10 @@
   "block.musicbox.musicbox": "Music Box",
   "block.musicbox.echo_pedestal": "Echo Pedestal",
   "block.musicbox.chorus_ore": "Murichorum Ore",
-  "block.musicbox.chorus_block": "Murichorum Block",
-  "block.musicbox.raw_chorus_block": "Raw Murichorum Block",
-  "block.musicbox.chiseled_chorus_block": "Chiseled Murichorum Block",
-  "block.musicbox.cut_chorus_block": "Cut Murichorum Block",
+  "block.musicbox.chorus_block": "Block of Murichorum",
+  "block.musicbox.raw_chorus_block": "Block of Raw Murichorum",
+  "block.musicbox.chiseled_chorus_block": "Chiseled Murichorum",
+  "block.musicbox.cut_chorus_block": "Cut Murichorum",
   "block.musicbox.cut_chorus_stairs": "Cut Murichorum Stairs",
   "block.musicbox.cut_chorus_slab": "Cut Murichorum Slab",
   "block.musicbox.chorus_door": "Murichorum Door",
@@ -18,6 +18,9 @@
   "item.musicbox.raw_chorus": "Raw Murichorum",
   "item.musicbox.crystal_shard": "Echothyst Shard",
   "item.musicbox.old_parchment": "Old Parchment",
+  "tooltip.musicbox.play_preview": "Play Preview",
+  "tooltip.musicbox.stop_preview": "Stop Preview",
+  "tooltip.musicbox.start_craft": "Begin Crafting",
   "trim_material.musicbox.chorus": "Murichorum",
   "trim_material.musicbox.crystal": "Echothyst",
   "sounds.musicbox.ore_sing": "Ghostly singing",
@@ -31,6 +34,7 @@
   "sounds.musicbox.pedestal_item_place": "Item plops",
   "sounds.musicbox.pedestal_item_pickup": "Item plops",
   "sounds.musicbox.pedestal_craft": "Item transforms",
+  "sounds.musicbox.paper_flip": "Parchment flips",
   "jeitooltip.musicbox.beacon": "Requires Beacon",
-  "jeitooltip.musicbox.consumes": "Consumes Item"
+  "jeitooltip.musicbox.consumes": "Item Consumed"
 }

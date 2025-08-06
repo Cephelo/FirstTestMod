@@ -105,5 +105,16 @@
         "pitch": 0.75
       }
     ]
+  },
+  "paper_flip": {
+    "subtitle": "sounds.musicbox.paper_flip",
+    "sounds": [
+      {
+        "name": "entity.villager.work_librarian",
+        "type": "event",
+        "volume": 0.8,
+        "pitch": 1.2
+      }
+    ]
   }
 }

@@ -23,17 +23,18 @@ import java.util.function.ToIntFunction;
 
 public class ModBlocks {
     public static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks(MusicBoxMod.MODID);
+    private static final SoundType chorusSoundType = SoundType.AMETHYST_CLUSTER;
 
     public static final DeferredBlock<Block> CHORUS_BLOCK = registerBlock("chorus_block", () -> new Block(BlockBehaviour.Properties.of()
-            .sound(SoundType.AMETHYST_CLUSTER)
-            .strength(3f, 4f)
+            .sound(chorusSoundType)
+            .strength(4f, 6f)
             .requiresCorrectToolForDrops()
             .instrument(NoteBlockInstrument.CHIME)
     ));
 
     public static final DeferredBlock<Block> RAW_CHORUS_BLOCK = registerBlock("raw_chorus_block", () -> new Block(BlockBehaviour.Properties.of()
             .sound(SoundType.AMETHYST_CLUSTER)
-            .strength(3f, 4f)
+            .strength(4f, 6f)
             .requiresCorrectToolForDrops()
             .instrument(NoteBlockInstrument.FLUTE)
     ));
@@ -41,7 +42,7 @@ public class ModBlocks {
     public static final DeferredBlock<Block> CHORUS_ORE = registerBlock("chorus_ore",
             () -> new ChorusOreBlock(BlockBehaviour.Properties.of()
                     .sound(SoundType.STONE)
-                    .strength(3f, 4f)
+                    .strength(4f, 4f)
                     .requiresCorrectToolForDrops()
                     .randomTicks()
                     .instrument(NoteBlockInstrument.BASEDRUM)
@@ -50,72 +51,72 @@ public class ModBlocks {
     public static final DeferredBlock<Block> ECHO_PEDESTAL = registerBlock("echo_pedestal",
             () -> new PedestalBlock(BlockBehaviour.Properties.of()
                     .noOcclusion()
-                    .sound(SoundType.STONE)
-                    .strength(3f, 4f)
+                    .sound(SoundType.DEEPSLATE_TILES)
+                    .strength(3f, 6f)
                     .requiresCorrectToolForDrops()
     ));
 
     public static final DeferredBlock<Block> MUSICBOX = registerBlock("musicbox",
             () -> new MusicboxBlock(BlockBehaviour.Properties.of()
                     .noOcclusion()
-                    .sound(SoundType.BAMBOO_WOOD)
-                    .strength(3f, 4f)
+                    .sound(SoundType.NETHERITE_BLOCK)
+                    .strength(12f, 1200f)
             ));
 
     public static final DeferredBlock<Block> CHISELED_CHORUS_BLOCK = registerBlock("chiseled_chorus_block", () -> new Block(BlockBehaviour.Properties.of()
-            .sound(SoundType.AMETHYST_CLUSTER)
-            .strength(3f, 4f)
+            .sound(chorusSoundType)
+            .strength(4f, 6f)
             .requiresCorrectToolForDrops()
             .instrument(NoteBlockInstrument.CHIME)
     ));
 
     public static final DeferredBlock<Block> CUT_CHORUS_BLOCK = registerBlock("cut_chorus_block", () -> new Block(BlockBehaviour.Properties.of()
-            .sound(SoundType.AMETHYST_CLUSTER)
-            .strength(3f, 4f)
+            .sound(chorusSoundType)
+            .strength(4f, 6f)
             .requiresCorrectToolForDrops()
             .instrument(NoteBlockInstrument.CHIME)
     ));
 
     public static final DeferredBlock<StairBlock> CUT_CHORUS_STAIRS = registerBlock("cut_chorus_stairs",
             () -> new StairBlock(ModBlocks.CUT_CHORUS_BLOCK.get().defaultBlockState(), BlockBehaviour.Properties.of()
-                    .sound(SoundType.AMETHYST_CLUSTER)
-                    .strength(3f, 4f)
+                    .sound(chorusSoundType)
+                    .strength(4f, 6f)
                     .requiresCorrectToolForDrops()
             ));
 
     public static final DeferredBlock<SlabBlock> CUT_CHORUS_SLAB = registerBlock("cut_chorus_slab",
             () -> new SlabBlock(BlockBehaviour.Properties.of()
-                    .sound(SoundType.AMETHYST_CLUSTER)
-                    .strength(3f, 4f)
+                    .sound(chorusSoundType)
+                    .strength(4f, 6f)
                     .requiresCorrectToolForDrops()
             ));
 
     public static final DeferredBlock<DoorBlock> CHORUS_DOOR = registerBlock("chorus_door",
             () -> new DoorBlock(BlockSetType.COPPER, BlockBehaviour.Properties.of()
                     .noOcclusion()
-                    .strength(3f, 4f)
+                    .strength(4f, 4f)
                     .requiresCorrectToolForDrops()
             ));
 
     public static final DeferredBlock<TrapDoorBlock> CHORUS_TRAPDOOR = registerBlock("chorus_trapdoor",
             () -> new TrapDoorBlock(BlockSetType.COPPER, BlockBehaviour.Properties.of()
                     .noOcclusion()
-                    .strength(3f, 4f)
+                    .strength(4f, 4f)
                     .requiresCorrectToolForDrops()
             ));
 
     public static final DeferredBlock<Block> CHORUS_LAMP = registerBlock("chorus_lamp",
             () -> new ChorusLampBlock(BlockBehaviour.Properties.of()
                     .lightLevel(litBlockEmission(15))
-                    .sound(SoundType.GLASS)
-                    .strength(3f, 4f)
+                    .sound(SoundType.COPPER_BULB)
+                    .strength(4f, 6f)
                     .requiresCorrectToolForDrops()
                     .randomTicks()
     ));
 
     public static final DeferredBlock<Block> CRYSTAL_BLOCK = registerBlock("crystal_block", () -> new AmethystBlock(BlockBehaviour.Properties.of()
-            .sound(SoundType.AMETHYST)
-            .strength(3f, 4f)
+            .sound(SoundType.AMETHYST_CLUSTER)
+            .strength(2f, 3f)
             .requiresCorrectToolForDrops()
             .instrument(NoteBlockInstrument.CHIME)
     ));

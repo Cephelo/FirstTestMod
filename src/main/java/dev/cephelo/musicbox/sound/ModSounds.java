@@ -24,6 +24,7 @@ public class ModSounds {
     public static final Supplier<SoundEvent> PEDESTAL_ITEM_PLACE = registerSoundEvent("pedestal_item_place");
     public static final Supplier<SoundEvent> PEDESTAL_ITEM_PICKUP = registerSoundEvent("pedestal_item_pickup");
     public static final Supplier<SoundEvent> PEDESTAL_CRAFT = registerSoundEvent("pedestal_craft");
+    public static final Supplier<SoundEvent> PAPER_FLIP = registerSoundEvent("paper_flip");
 
     private static Supplier<SoundEvent> registerSoundEvent(String name) {
         ResourceLocation id = ResourceLocation.fromNamespaceAndPath(MusicBoxMod.MODID, name);

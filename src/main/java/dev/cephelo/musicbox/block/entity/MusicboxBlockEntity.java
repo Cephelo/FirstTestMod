@@ -175,6 +175,9 @@ public class MusicboxBlockEntity extends BlockEntity implements MenuProvider {
 
         if (itemBeingCrafted != ItemStack.EMPTY || progress > 0) {
             progress++;
+            if (level instanceof ServerLevel serverLevel && progress <= 160)
+                serverLevel.sendParticles(ParticleTypes.PORTAL, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, progress / 10, 0, 0, 0, 0.25);
+
             if (progress >= maxProgress) {
                 // Reset progress
                 progress = 0;
@@ -183,9 +186,13 @@ public class MusicboxBlockEntity extends BlockEntity implements MenuProvider {
                 itemHandler.setStackInSlot(OUTPUT_SLOT, itemBeingCrafted);
 
                 itemBeingCrafted = ItemStack.EMPTY;
-                // play finish sound
+
+                // play finish sound and display particles
                 manager.stop(shudderSound);
-                if (this.level != null) this.level.playSound(null, this.getBlockPos(), ModSounds.CRAFTING_DONE.get(), SoundSource.RECORDS);
+                if (level instanceof ServerLevel serverLevel) {
+                    serverLevel.playSound(null, this.getBlockPos(), ModSounds.CRAFTING_DONE.get(), SoundSource.RECORDS);
+                    serverLevel.sendParticles(ParticleTypes.POOF, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 20, 0.5, 0.5, 0.5, 0.1);
+                }
 
                 level.setBlock(pos, state.setValue(STATUS, MusicboxStatus.IDLE), 3);
             }
@@ -197,6 +204,10 @@ public class MusicboxBlockEntity extends BlockEntity implements MenuProvider {
 
         if (isPlayingPreviewSound) {
             previewProgress++;
+            // particle
+            if (level instanceof ServerLevel serverLevel && previewProgress <= 160)
+                serverLevel.sendParticles(ParticleTypes.PORTAL, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 1, 0, 0, 0, 0.25);
+
             // Loop preview sound if it's too short
             if (!manager.isActive(previewSound)) playPreviewSound(progress >= 2, false);
         }
@@ -234,6 +245,8 @@ public class MusicboxBlockEntity extends BlockEntity implements MenuProvider {
     }
 
     private void previewButton() {
+        if (itemBeingCrafted != ItemStack.EMPTY) return;
+
         if (previewProgress < 2) this.playPreviewSound(false, true);
         else this.stopPreviewSound(true, false);
     }
@@ -359,5 +372,10 @@ public class MusicboxBlockEntity extends BlockEntity implements MenuProvider {
     @Override
     public @Nullable Packet<ClientGamePacketListener> getUpdatePacket() {
         return ClientboundBlockEntityDataPacket.create(this);
+    }
+
+    public void onRemove() {
+        manager.stop(previewSound);
+        manager.stop(shudderSound);
     }
 }

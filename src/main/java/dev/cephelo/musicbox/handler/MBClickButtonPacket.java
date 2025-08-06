@@ -39,7 +39,7 @@ public record MBClickButtonPacket(BlockPos pos, int id) implements CustomPacketP
     {
         // Thank you to Commoble for this example block
         Player p = context.player();
-        if (!(p instanceof ServerPlayer player) || !(player.containerMenu instanceof MusicboxMenu menu))
+        if (!(p instanceof ServerPlayer player)/* || !(player.containerMenu instanceof MusicboxMenu menu)*/)
         {
             // don't do anything else if menu isn't open (averts possible spam from bad actors)
             return;

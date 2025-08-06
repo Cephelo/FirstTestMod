@@ -1,8 +1,10 @@
 package dev.cephelo.musicbox.block.custom;
 
 import com.mojang.serialization.MapCodec;
+import dev.cephelo.musicbox.MusicBoxMod;
 import dev.cephelo.musicbox.block.entity.MusicboxBlockEntity;
 import dev.cephelo.musicbox.block.entity.ModBlockEntities;
+import dev.cephelo.musicbox.handler.MBClickButtonPacket;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
@@ -23,10 +25,13 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.phys.BlockHitResult;
+import net.neoforged.neoforge.network.PacketDistributor;
 import org.jetbrains.annotations.Nullable;
 
 public class MusicboxBlock extends BaseEntityBlock {
     public static final MapCodec<MusicboxBlock> CODEC = simpleCodec(MusicboxBlock::new);
+
+    private boolean shouldTrigger = false;
 
     public static final EnumProperty<MusicboxStatus> STATUS = EnumProperty.create("status", MusicboxStatus.class);
     public static final BooleanProperty BEACON = BooleanProperty.create("beacon_powered");
@@ -60,6 +65,7 @@ public class MusicboxBlock extends BaseEntityBlock {
             BlockEntity blockEntity = pLevel.getBlockEntity(pPos);
             if (blockEntity instanceof MusicboxBlockEntity musicboxBlockEntity) {
                 musicboxBlockEntity.drops();
+                musicboxBlockEntity.onRemove();
             }
         }
 
@@ -92,5 +98,14 @@ public class MusicboxBlock extends BaseEntityBlock {
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(STATUS, BEACON);
+    }
+
+    // neighborChanged triggers twice (once from setBlockAndUpdate, once from tick)
+    // shouldTrigger is here to prevent the sound from playing twice incorrectly
+    @Override
+    protected void neighborChanged(BlockState state, Level level, BlockPos pos, Block block, BlockPos fromPos, boolean isMoving) {
+        shouldTrigger = !shouldTrigger;
+        if (level.hasNeighborSignal(pos) && shouldTrigger)
+            PacketDistributor.sendToServer(new MBClickButtonPacket(pos, level.getDirectSignalTo(pos) >= 14 ? 1 : 0));
     }
 }

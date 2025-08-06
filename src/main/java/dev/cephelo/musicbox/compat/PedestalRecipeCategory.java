@@ -33,7 +33,7 @@ public class PedestalRecipeCategory implements IRecipeCategory<PedestalRecipe> {
         this.background = helper.createDrawable(TEXTURE, 0, 0, 106, 40);
         this.icon = helper.createDrawableIngredient(VanillaTypes.ITEM_STACK, new ItemStack(ModBlocks.ECHO_PEDESTAL));
         this.consumeX = new RecipeConditionIcon(helper.createDrawable(X_TEXTURE, 0, 0, 7, 7),
-                18, 28, "jeitooltip.musicbox.consumes");
+                17, 29, "jeitooltip.musicbox.consumes");
     }
 
     @Override

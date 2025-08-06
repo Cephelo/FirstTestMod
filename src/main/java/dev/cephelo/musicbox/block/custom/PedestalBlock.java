@@ -6,6 +6,9 @@ import dev.cephelo.musicbox.recipe.*;
 import dev.cephelo.musicbox.sound.ModSounds;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.NonNullList;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.core.particles.SimpleParticleType;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.ItemInteractionResult;
@@ -77,6 +80,7 @@ public class PedestalBlock extends BaseEntityBlock {
                 pedestalBlockEntity.inventory.insertItem(0, stack.copy(), false);
                 stack.shrink(1);
                 level.playSound(player, pos, ModSounds.PEDESTAL_ITEM_PLACE.get(), SoundSource.BLOCKS);
+
             } else if (!pedestalBlockEntity.inventory.getStackInSlot(0).isEmpty() && !stack.isEmpty()) {
                 ItemStack stackOnPedestal = pedestalBlockEntity.inventory.extractItem(0, 1, false);
 
@@ -87,6 +91,9 @@ public class PedestalBlock extends BaseEntityBlock {
                     pedestalBlockEntity.inventory.insertItem(0, recipe.output().copy(), false);
                     level.playSound(null, pos, ModSounds.PEDESTAL_CRAFT.get(), SoundSource.BLOCKS, 1,
                             (level.random.nextFloat() - level.random.nextFloat()) * 0.1F + 1);
+                    if (level instanceof ServerLevel serverLevel)
+                        serverLevel.sendParticles(ParticleTypes.SONIC_BOOM, pos.getX() + 0.5, pos.getY() + 1.15, pos.getZ() + 0.5, 1, 0, 0, 0, 0);
+
                 } else if (!level.isClientSide()) {
                     player.addItem(stackOnPedestal);
                     pedestalBlockEntity.clearContents();
