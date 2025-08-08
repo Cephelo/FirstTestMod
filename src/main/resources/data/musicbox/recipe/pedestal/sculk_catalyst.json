@@ -1,0 +1,15 @@
+{
+  "type": "musicbox:pedestal",
+  "ingredients": [
+    {
+      "item": "minecraft:sculk"
+    },
+    {
+      "item": "minecraft:echo_shard"
+    }
+  ],
+  "result": {
+    "id": "minecraft:sculk_catalyst"
+  },
+  "consumeHeldItem": true
+}

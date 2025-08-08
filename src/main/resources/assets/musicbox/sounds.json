@@ -4,7 +4,8 @@
     "sounds": [
       {
         "name": "musicbox:record_scratch",
-        "volume": 0.7
+        "volume": 0.5,
+        "pitch": 0.8
       }
     ]
   },

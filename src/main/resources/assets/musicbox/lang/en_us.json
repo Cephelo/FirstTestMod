@@ -36,5 +36,6 @@
   "sounds.musicbox.pedestal_craft": "Item transforms",
   "sounds.musicbox.paper_flip": "Parchment flips",
   "jeitooltip.musicbox.beacon": "Requires Beacon",
-  "jeitooltip.musicbox.consumes": "Item Consumed"
+  "jeitooltip.musicbox.consumed": "Item Consumed",
+  "jeitooltip.musicbox.not_consumed": "Item Not Consumed"
 }

@@ -2,14 +2,14 @@
   "type": "musicbox:pedestal",
   "ingredients": [
     {
-      "item": "musicbox:crystal_block"
+      "item": "minecraft:honey_bottle"
     },
     {
-      "item": "minecraft:amethyst_shard"
+      "item": "minecraft:dragon_breath"
     }
   ],
   "result": {
-    "id": "minecraft:amethyst_block"
+    "id": "minecraft:dragon_breath"
   },
   "consumeHeldItem": false
 }

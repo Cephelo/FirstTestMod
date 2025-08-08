@@ -2,14 +2,14 @@
   "type": "musicbox:pedestal",
   "ingredients": [
     {
-      "item": "musicbox:crystal_block"
+      "item": "minecraft:obsidian"
     },
     {
-      "item": "minecraft:amethyst_shard"
+      "item": "minecraft:crying_obsidian"
     }
   ],
   "result": {
-    "id": "minecraft:amethyst_block"
+    "id": "minecraft:crying_obsidian"
   },
   "consumeHeldItem": false
 }

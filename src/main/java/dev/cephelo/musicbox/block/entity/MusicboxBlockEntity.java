@@ -240,11 +240,22 @@ public class MusicboxBlockEntity extends BaseContainerBlockEntity implements Wor
 
         // Beacon check
         boolean beacon = level.getBlockEntity(this.getBlockPos().below()) instanceof BeaconBlockEntity bea && bea.levels >= 4 && !bea.getBeamSections().isEmpty();
-        if (this.getBlockState().getValue(BEACON) != beacon)
-            level.setBlock(pos, state.setValue(BEACON, beacon), 3);
+        if (this.getBlockState().getValue(BEACON) != beacon) {
+
+            // Only deactivates if not crafting, otherwise changes normally (for texture aesthetics)
+            if (progress == 0 || beacon) level.setBlock(pos, state.setValue(BEACON, beacon), 3);
+
+            // If beacon turned off, stop playing preview sound
+            if (!beacon && previewProgress > 0 && progress == 0) {
+                this.stopPreviewSound(true, false);
+                level.playSound(null, this.getBlockPos(), ModSounds.BEACON_FAIL.get(), SoundSource.RECORDS);
+                return;
+            }
+        }
 
         if (itemBeingCrafted != ItemStack.EMPTY || progress > 0) {
             progress++;
+
             if (level instanceof ServerLevel serverLevel && progress <= maxProgress - Math.min(maxProgress, 40))
                 serverLevel.sendParticles(ParticleTypes.PORTAL, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, progress / 10, 0, 0, 0, 0.25);
 
@@ -279,7 +290,7 @@ public class MusicboxBlockEntity extends BaseContainerBlockEntity implements Wor
                 serverLevel.sendParticles(ParticleTypes.PORTAL, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 1, 0, 0, 0, 0.25);
 
             // Loop preview sound if it's too short
-            if (!manager.isActive(previewSound)) playPreviewSound(progress >= 2 && Config.MUSICBOX_CRAFT_SPEEDUP.get(), false, false);
+            if (!manager.isActive(previewSound)) playPreviewSound(progress >= 2 && Config.MUSICBOX_CRAFT_SPEEDUP.get(), false, progress > 0);
         }
 
         if (progress == 0) { // && itemHandler.getStackInSlot(OUTPUT_SLOT).isEmpty()) {
@@ -375,7 +386,7 @@ public class MusicboxBlockEntity extends BaseContainerBlockEntity implements Wor
     private void playPreviewSound(boolean spedUp, boolean isFirstLoop, boolean isCrafting, MusicboxRecipe recipe) {
         if (recipe == null) recipe = checkRecipe();
         if (recipe != null && canOutputItem(recipe.output())) { //itemHandler.getStackInSlot(OUTPUT_SLOT).isEmpty()) {
-            if (isFirstLoop) stopPreviewSound(false, spedUp);
+            if (isFirstLoop) stopPreviewSound(false, isCrafting);
 
             if (!beaconCheck(recipe.beacon())) return;
 
@@ -407,14 +418,16 @@ public class MusicboxBlockEntity extends BaseContainerBlockEntity implements Wor
     private void stopPreviewSound(boolean playStopSound, boolean craftStop) {
         manager.stop(previewSound);
 
-        // Record Scratch sound plays is crafting is started while preview is playing
-        if (previewProgress < maxPreviewProgress && previewProgress > 0 && craftStop && this.level != null)
-            this.level.playSound(null, this.getBlockPos(), ModSounds.RECORD_SCRATCH.get(), SoundSource.RECORDS);
-        // Otherwise stop sound is played
-        else if (this.level != null && playStopSound)
-            this.level.playSound(null, this.getBlockPos(), ModSounds.PREVIEW_STOP.get(), SoundSource.RECORDS);
+        if (this.level != null) {
+            // Record Scratch sound plays if crafting is started while preview is playing
+            if (previewProgress < maxPreviewProgress && previewProgress > 0 && craftStop)
+                this.level.playSound(null, this.getBlockPos(), ModSounds.RECORD_SCRATCH.get(), SoundSource.RECORDS);
+            // Otherwise stop sound is played
+            else if (playStopSound)
+                this.level.playSound(null, this.getBlockPos(), ModSounds.PREVIEW_STOP.get(), SoundSource.RECORDS);
 
-        if (level != null) level.setBlock(this.getBlockPos(), this.getBlockState().setValue(STATUS, MusicboxStatus.IDLE), 3);
+            this.level.setBlock(this.getBlockPos(), this.getBlockState().setValue(STATUS, MusicboxStatus.IDLE), 3);
+        }
 
         previewProgress = 0;
         isPlayingPreviewSound = false;
