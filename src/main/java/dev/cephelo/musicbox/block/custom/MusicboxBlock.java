@@ -1,7 +1,7 @@
 package dev.cephelo.musicbox.block.custom;
 
 import com.mojang.serialization.MapCodec;
-import dev.cephelo.musicbox.MusicBoxMod;
+import dev.cephelo.musicbox.Config;
 import dev.cephelo.musicbox.block.entity.MusicboxBlockEntity;
 import dev.cephelo.musicbox.block.entity.ModBlockEntities;
 import dev.cephelo.musicbox.handler.MBClickButtonPacket;
@@ -35,12 +35,14 @@ public class MusicboxBlock extends BaseEntityBlock {
 
     public static final EnumProperty<MusicboxStatus> STATUS = EnumProperty.create("status", MusicboxStatus.class);
     public static final BooleanProperty BEACON = BooleanProperty.create("beacon_powered");
+    public static final BooleanProperty READY = BooleanProperty.create("ready_to_craft");
 
     public MusicboxBlock(Properties properties) {
         super(properties);
         this.registerDefaultState(this.defaultBlockState()
                 .setValue(STATUS, MusicboxStatus.IDLE)
                 .setValue(BEACON, false)
+                .setValue(READY, false)
         );
     }
 
@@ -80,7 +82,7 @@ public class MusicboxBlock extends BaseEntityBlock {
             if(entity instanceof MusicboxBlockEntity musicboxBlockEntity) {
                 ((ServerPlayer) pPlayer).openMenu(new SimpleMenuProvider(musicboxBlockEntity, Component.literal("Music Box")), pPos);
             } else {
-                throw new IllegalStateException("Our Container provider is missing!");
+                throw new IllegalStateException("missing container provider...");
             }
         }
 
@@ -97,15 +99,36 @@ public class MusicboxBlock extends BaseEntityBlock {
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(STATUS, BEACON);
+        builder.add(STATUS, BEACON, READY);
     }
 
-    // neighborChanged triggers twice (once from setBlockAndUpdate, once from tick)
+    // neighborChanged triggers twice (once from setBlockAndUpdate, once from tick) under certain conditions???
     // shouldTrigger is here to prevent the sound from playing twice incorrectly
     @Override
     protected void neighborChanged(BlockState state, Level level, BlockPos pos, Block block, BlockPos fromPos, boolean isMoving) {
         shouldTrigger = !shouldTrigger;
+
+        int threshold = Config.MUSICBOX_REDSTONE_CRAFT_THRESHOLD.get();
+
         if (level.hasNeighborSignal(pos) && shouldTrigger)
-            PacketDistributor.sendToServer(new MBClickButtonPacket(pos, level.getDirectSignalTo(pos) >= 14 ? 1 : 0));
+            PacketDistributor.sendToServer(new MBClickButtonPacket(pos, level.getDirectSignalTo(pos) >= threshold ? 1 : 0));
+        if (level.getDirectSignalTo(pos) >= threshold) shouldTrigger = false; // somehow doesn't happen when crafting
+    }
+
+    // Comparator output
+    @Override
+    protected boolean hasAnalogOutputSignal(BlockState state) {
+        return true;
+    }
+
+    @Override
+    protected int getAnalogOutputSignal(BlockState state, Level level, BlockPos pos) {
+        int status = switch (state.getValue(STATUS)) {
+            case IDLE -> 1;
+            case PREVIEW -> 2;
+            case CRAFTING -> 3 + 8;
+        };
+
+        return status + (state.getValue(BEACON) ? 4 : 0) + (state.getValue(READY) ? 8 : 0);
     }
 }

@@ -1,6 +1,5 @@
 package dev.cephelo.musicbox.screens.custom;
 
-import dev.cephelo.musicbox.MusicBoxMod;
 import dev.cephelo.musicbox.block.ModBlocks;
 import dev.cephelo.musicbox.block.entity.MusicboxBlockEntity;
 import dev.cephelo.musicbox.handler.MBClickButtonPacket;
@@ -62,15 +61,11 @@ public class MusicboxMenu extends AbstractContainerMenu {
     }
 
     public void pressPreviewButton() {
-        //MusicBoxMod.LOGGER.info("pressPreviewButton");
         PacketDistributor.sendToServer(new MBClickButtonPacket(this.blockEntity.getBlockPos(), 0));
-        //blockEntity.previewButton();
     }
 
     public void pressCraftButton() {
-        //MusicBoxMod.LOGGER.info("pressCraftButton");
         PacketDistributor.sendToServer(new MBClickButtonPacket(this.blockEntity.getBlockPos(), 1));
-        //blockEntity.craftButton();
     }
 
     // CREDIT GOES TO: diesieben07 | https://github.com/diesieben07/SevenCommons

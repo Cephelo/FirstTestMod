@@ -18,6 +18,5 @@
     "id": "minecraft:music_disc_mellohi"
   },
   "soundEvent": "music_disc.mellohi",
-  "enablePreivew": true,
   "needsBeacon": false
 }

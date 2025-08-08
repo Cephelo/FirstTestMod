@@ -6,7 +6,6 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
@@ -38,7 +37,6 @@ public class ModCreativeModTab {
                         event.accept(ModItems.CHORUS_NUGGET);
                         event.accept(ModItems.CRYSTAL_SHARD);
                         event.accept(ModItems.OLD_PARCHMENT);
-                        event.accept(Items.ECHO_SHARD);
                     }).build());
 
     public static void register (IEventBus eventBus) {

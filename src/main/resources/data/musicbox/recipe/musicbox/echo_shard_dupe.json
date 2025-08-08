@@ -19,6 +19,7 @@
     "count": 2
   },
   "soundEvent": "block.sculk_sensor.clicking",
-  "enablePreivew": true,
+  "previewTime": 100,
+  "previewTime": 200,
   "needsBeacon": true
 }

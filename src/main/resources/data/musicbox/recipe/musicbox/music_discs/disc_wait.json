@@ -18,6 +18,5 @@
     "id": "minecraft:music_disc_wait"
   },
   "soundEvent": "music_disc.wait",
-  "enablePreivew": true,
   "needsBeacon": false
 }

@@ -4,6 +4,7 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import dev.cephelo.musicbox.Config;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.RegistryFriendlyByteBuf;
@@ -17,13 +18,11 @@ import net.neoforged.neoforge.common.util.RecipeMatcher;
 import java.util.ArrayList;
 import java.util.function.Function;
 
-public record MusicboxRecipe (NonNullList<Ingredient> inputs, ItemStack output, boolean preview, boolean beacon, String sound) implements Recipe<MusicboxRecipeInput> {
+public record MusicboxRecipe (NonNullList<Ingredient> inputs, ItemStack output, boolean beacon, String sound, int previewTime, int craftingTime) implements Recipe<MusicboxRecipeInput> {
 
     @Override
     public NonNullList<Ingredient> getIngredients() {
-        //NonNullList<Ingredient> itemList = NonNullList.create();
-        //for (Ingredient i : inputs) itemList.add(i);
-        return inputs;//itemList;
+        return inputs;
     }
     
     @Override
@@ -37,11 +36,6 @@ public record MusicboxRecipe (NonNullList<Ingredient> inputs, ItemStack output, 
                 if (!item.isEmpty()) nonEmptyItems.add(item);
             return RecipeMatcher.findMatches(nonEmptyItems, this.inputs) != null;
         }
-//        for (int i = 0; i < inputs.size(); i++) {
-//            if (!inputs.get(i).test(musicboxRecipeInput.getItem(i))) return false;
-//        }
-//
-//        return true;
     }
 
 
@@ -87,21 +81,21 @@ public record MusicboxRecipe (NonNullList<Ingredient> inputs, ItemStack output, 
                         DataResult::success
                 ).forGetter(MusicboxRecipe::inputs),
                 ItemStack.CODEC.fieldOf("result").forGetter(MusicboxRecipe::output),
-                Codec.BOOL.optionalFieldOf("enablePreview", true).forGetter(MusicboxRecipe::preview),
-                Codec.BOOL.optionalFieldOf("needsBeacon", true).forGetter(MusicboxRecipe::beacon),
-                Codec.STRING.fieldOf("soundEvent").forGetter(MusicboxRecipe::sound)
+                Codec.BOOL.optionalFieldOf("needsBeacon", false).forGetter(MusicboxRecipe::beacon),
+                Codec.STRING.fieldOf("soundEvent").forGetter(MusicboxRecipe::sound),
+                Codec.INT.optionalFieldOf("previewTime", -1).forGetter(MusicboxRecipe::previewTime),
+                Codec.INT.optionalFieldOf("craftingTime", -1).forGetter(MusicboxRecipe::craftingTime)
         ).apply(inst, MusicboxRecipe::new));
 
         // Sent from network to ensure client and server know the same things
         public static final StreamCodec<RegistryFriendlyByteBuf, MusicboxRecipe> STREAM_CODEC =
-                //StreamCodec.of(MusicboxRecipe.Serializer::toNetwork, MusicboxRecipe.Serializer::fromNetwork);
                 StreamCodec.composite(
-                        //Ingredient.CONTENTS_STREAM_CODEC.apply(ByteBufCodecs.list()), MusicboxRecipe::inputs,
                         Ingredient.CONTENTS_STREAM_CODEC.apply(ByteBufCodecs.list()).map(NonNullList::copyOf, Function.identity()), MusicboxRecipe::inputs,
                         ItemStack.STREAM_CODEC, MusicboxRecipe::output,
-                        ByteBufCodecs.BOOL, MusicboxRecipe::preview,
                         ByteBufCodecs.BOOL, MusicboxRecipe::beacon,
                         ByteBufCodecs.STRING_UTF8, MusicboxRecipe::sound,
+                        ByteBufCodecs.INT, MusicboxRecipe::previewTime,
+                        ByteBufCodecs.INT, MusicboxRecipe::craftingTime,
                         MusicboxRecipe::new
                 );
 

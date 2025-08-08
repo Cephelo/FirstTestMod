@@ -18,6 +18,5 @@
     "id": "minecraft:music_disc_precipice"
   },
   "soundEvent": "music_disc.precipice",
-  "enablePreivew": true,
   "needsBeacon": false
 }

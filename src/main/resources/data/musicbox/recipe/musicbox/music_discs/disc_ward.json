@@ -18,6 +18,5 @@
     "id": "minecraft:music_disc_ward"
   },
   "soundEvent": "music_disc.ward",
-  "enablePreivew": true,
   "needsBeacon": false
 }

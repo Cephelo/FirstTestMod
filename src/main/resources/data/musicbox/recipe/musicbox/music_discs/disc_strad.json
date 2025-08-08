@@ -18,6 +18,5 @@
     "id": "minecraft:music_disc_strad"
   },
   "soundEvent": "music_disc.strad",
-  "enablePreivew": true,
   "needsBeacon": false
 }

@@ -1,5 +1,6 @@
 package dev.cephelo.musicbox.block.custom;
 
+import dev.cephelo.musicbox.Config;
 import dev.cephelo.musicbox.sound.ModSounds;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
@@ -8,7 +9,6 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.ItemInteractionResult;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
@@ -28,14 +28,14 @@ public class ChorusOreBlock extends Block {
 
     @Override
     protected void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
-        sing(level, pos, random, 1.0);
+        sing(level, pos, random, Config.ORE_SING_CHANCE.get());
     }
 
     @Override
     protected ItemInteractionResult useItemOn(
             ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult
     ) {
-        sing(level, pos, level.getRandom(), 1.0);
+        sing(level, pos, level.getRandom(), Config.ORE_SING_CHANCE.get());
 
         return stack.getItem() instanceof BlockItem && new BlockPlaceContext(player, hand, stack, hitResult).canPlace()
                 ? ItemInteractionResult.SKIP_DEFAULT_BLOCK_INTERACTION

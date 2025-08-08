@@ -18,6 +18,5 @@
     "id": "minecraft:music_disc_creator_music_box"
   },
   "soundEvent": "music_disc.creator_music_box",
-  "enablePreivew": true,
   "needsBeacon": false
 }

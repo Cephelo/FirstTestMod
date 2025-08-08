@@ -18,6 +18,5 @@
     "id": "minecraft:music_disc_blocks"
   },
   "soundEvent": "music_disc.blocks",
-  "enablePreivew": true,
   "needsBeacon": false
 }

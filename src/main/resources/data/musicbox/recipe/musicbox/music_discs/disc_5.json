@@ -18,6 +18,5 @@
     "id": "minecraft:music_disc_5"
   },
   "soundEvent": "music_disc.5",
-  "enablePreivew": true,
   "needsBeacon": true
 }

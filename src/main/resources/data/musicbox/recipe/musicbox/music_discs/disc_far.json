@@ -18,6 +18,5 @@
     "id": "minecraft:music_disc_far"
   },
   "soundEvent": "music_disc.far",
-  "enablePreivew": true,
   "needsBeacon": false
 }

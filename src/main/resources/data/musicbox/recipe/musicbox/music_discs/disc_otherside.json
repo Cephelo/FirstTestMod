@@ -18,6 +18,5 @@
     "id": "minecraft:music_disc_otherside"
   },
   "soundEvent": "music_disc.otherside",
-  "enablePreivew": true,
   "needsBeacon": false
 }

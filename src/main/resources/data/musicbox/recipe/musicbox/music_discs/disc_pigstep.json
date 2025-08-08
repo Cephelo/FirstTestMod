@@ -18,6 +18,5 @@
     "id": "minecraft:music_disc_pigstep"
   },
   "soundEvent": "music_disc.pigstep",
-  "enablePreivew": true,
   "needsBeacon": false
 }

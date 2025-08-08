@@ -122,7 +122,7 @@ public class ModBlocks {
     ));
 
     private static ToIntFunction<BlockState> litBlockEmission(int lightValue) {
-        return p_50763_ -> p_50763_.getValue(BlockStateProperties.LIT) ? lightValue : 0;
+        return pState -> pState.getValue(BlockStateProperties.LIT) ? lightValue : 0;
     }
 
     private static <T extends Block> DeferredBlock<T> registerBlock(String name, Supplier<T> block) {

@@ -18,6 +18,5 @@
     "id": "minecraft:music_disc_relic"
   },
   "soundEvent": "music_disc.relic",
-  "enablePreivew": true,
   "needsBeacon": false
 }

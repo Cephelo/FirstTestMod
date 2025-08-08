@@ -18,6 +18,7 @@
     "id": "minecraft:budding_amethyst"
   },
   "soundEvent": "block.amethyst_block.resonate",
-  "enablePreivew": true,
+  "previewTime": 100,
+  "craftingTime": 200,
   "needsBeacon": true
 }
