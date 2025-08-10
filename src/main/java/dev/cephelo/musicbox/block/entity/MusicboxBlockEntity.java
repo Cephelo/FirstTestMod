@@ -3,16 +3,13 @@ package dev.cephelo.musicbox.block.entity;
 import dev.cephelo.musicbox.Config;
 import dev.cephelo.musicbox.MusicBoxMod;
 import dev.cephelo.musicbox.block.custom.MusicboxStatus;
+import dev.cephelo.musicbox.handler.MBSoundHandlerPacket;
 import dev.cephelo.musicbox.handler.MBToggleButtonPacket;
 import dev.cephelo.musicbox.recipe.ModRecipes;
 import dev.cephelo.musicbox.recipe.MusicboxRecipe;
 import dev.cephelo.musicbox.recipe.MusicboxRecipeInput;
 import dev.cephelo.musicbox.screens.custom.MusicboxMenu;
 import dev.cephelo.musicbox.sound.ModSounds;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.resources.sounds.SimpleSoundInstance;
-import net.minecraft.client.resources.sounds.SoundInstance;
-import net.minecraft.client.sounds.SoundManager;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
@@ -81,10 +78,6 @@ public class MusicboxBlockEntity extends BaseContainerBlockEntity implements Wor
     private int previewProgress = 0;
     private int maxPreviewProgress;
     private boolean isPlayingPreviewSound = false;
-
-    private final SoundManager manager = Minecraft.getInstance().getSoundManager();
-    private SimpleSoundInstance previewSound;
-    private final SimpleSoundInstance shudderSound = new SimpleSoundInstance(ModSounds.CRAFTING_SHUDDER.get(), SoundSource.RECORDS, 1, 1, SoundInstance.createUnseededRandom(), this.getBlockPos());
 
     public MusicboxBlockEntity(BlockPos pos, BlockState blockState) {
         super(ModBlockEntities.MUSICBOX_BE.get(), pos, blockState);
@@ -269,8 +262,8 @@ public class MusicboxBlockEntity extends BaseContainerBlockEntity implements Wor
                 itemBeingCrafted = ItemStack.EMPTY;
 
                 // play finish sound and display particles
-                manager.stop(shudderSound);
                 if (level instanceof ServerLevel serverLevel) {
+                    PacketDistributor.sendToPlayersInDimension(serverLevel, new MBSoundHandlerPacket(this.getBlockPos(), 4, "null", false));
                     serverLevel.playSound(null, this.getBlockPos(), ModSounds.CRAFTING_DONE.get(), SoundSource.RECORDS);
                     serverLevel.sendParticles(ParticleTypes.POOF, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 20, 0.5, 0.5, 0.5, 0.1);
                 }
@@ -279,7 +272,7 @@ public class MusicboxBlockEntity extends BaseContainerBlockEntity implements Wor
             }
 
             if (progress == maxProgress - Math.min(maxProgress, 50)) {
-                manager.play(shudderSound); // play 11 sound
+                PacketDistributor.sendToPlayersInDimension((ServerLevel)level, new MBSoundHandlerPacket(this.getBlockPos(), 2, "null", false));
             }
         }
 
@@ -289,8 +282,9 @@ public class MusicboxBlockEntity extends BaseContainerBlockEntity implements Wor
             if (level instanceof ServerLevel serverLevel && previewProgress <= maxPreviewProgress - Math.min(maxPreviewProgress, 40))
                 serverLevel.sendParticles(ParticleTypes.PORTAL, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 1, 0, 0, 0, 0.25);
 
-            // Loop preview sound if it's too short
-            if (!manager.isActive(previewSound)) playPreviewSound(progress >= 2 && Config.MUSICBOX_CRAFT_SPEEDUP.get(), false, progress > 0);
+            // Loop preview sound if it's too short, also replays on login
+            // removed for loop sound and so don't need packets going both ways, rip pitch variance
+            //if (!MusicboxBESoundHandler.isPreviewActive(pos)/*!manager.isActive(previewSound)*/) playPreviewSound(progress >= 2 && Config.MUSICBOX_CRAFT_SPEEDUP.get(), false, progress > 0);
         }
 
         if (progress == 0) { // && itemHandler.getStackInSlot(OUTPUT_SLOT).isEmpty()) {
@@ -359,7 +353,7 @@ public class MusicboxBlockEntity extends BaseContainerBlockEntity implements Wor
             if (level != null) level.setBlock(this.getBlockPos(), this.getBlockState().setValue(STATUS, MusicboxStatus.CRAFTING), 3);
         } else {
             // play error sound
-            if (level != null) this.level.playSound(null, this.getBlockPos(), ModSounds.ERROR.get(), SoundSource.RECORDS);
+            //if (level != null) this.level.playSound(null, this.getBlockPos(), ModSounds.ERROR.get(), SoundSource.RECORDS);
             MusicBoxMod.LOGGER.info("null recipe");
         }
     }
@@ -401,8 +395,9 @@ public class MusicboxBlockEntity extends BaseContainerBlockEntity implements Wor
             // play recipe.sound on SoundSource, pitch spedUp+1
             SoundEvent sound = BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.tryParse(recipe.sound()));
             if (sound != null) {
-                previewSound = new SimpleSoundInstance(sound, SoundSource.RECORDS, 1, (spedUp ? 2 : 1), SoundInstance.createUnseededRandom(), this.getBlockPos());
-                manager.play(previewSound);
+                PacketDistributor.sendToPlayersInDimension((ServerLevel)level, new MBSoundHandlerPacket(this.getBlockPos(), 0, recipe.sound(), spedUp));
+                //previewSound = new SimpleSoundInstance(sound, SoundSource.RECORDS, 1, (spedUp ? 2 : 1), SoundInstance.createUnseededRandom(), this.getBlockPos());
+                //relayed right back to packet - MusicboxBESoundHandler.playPreviewSound(this.getBlockPos());//manager.play(previewSound);
                 isPlayingPreviewSound = true;
 
                 if (!spedUp && level != null) level.setBlock(this.getBlockPos(), this.getBlockState().setValue(STATUS, MusicboxStatus.PREVIEW), 3);
@@ -416,7 +411,7 @@ public class MusicboxBlockEntity extends BaseContainerBlockEntity implements Wor
     }
 
     private void stopPreviewSound(boolean playStopSound, boolean craftStop) {
-        manager.stop(previewSound);
+        PacketDistributor.sendToPlayersInDimension((ServerLevel)level, new MBSoundHandlerPacket(this.getBlockPos(), 3, "null", false));
 
         if (this.level != null) {
             // Record Scratch sound plays if crafting is started while preview is playing
@@ -449,7 +444,9 @@ public class MusicboxBlockEntity extends BaseContainerBlockEntity implements Wor
 
     private void enableButtons(boolean enablePreviewButton, boolean enableCraftButton) {
         // enable/disable buttons
-        PacketDistributor.sendToServer(new MBToggleButtonPacket(this.getBlockPos(), enablePreviewButton ? 1 : 0, enableCraftButton ? 1 : 0, isPlayingPreviewSound ? 1 : 0, this.getBlockState().getValue(BEACON) ? 1 : 0));
+        if (level instanceof ServerLevel serverLevel)
+            PacketDistributor.sendToPlayersNear(serverLevel, null, this.getBlockPos().getX(), this.getBlockPos().getY(), this.getBlockPos().getZ(), 10,
+                new MBToggleButtonPacket(this.getBlockPos(), enablePreviewButton ? 1 : 0, enableCraftButton ? 1 : 0, isPlayingPreviewSound ? 1 : 0, this.getBlockState().getValue(BEACON) ? 1 : 0));
 
         if (this.getBlockState().getValue(READY) != enableCraftButton)
             this.level.setBlock(this.getBlockPos(), this.getBlockState().setValue(READY, enableCraftButton), 3);
@@ -468,15 +465,19 @@ public class MusicboxBlockEntity extends BaseContainerBlockEntity implements Wor
     }
 
     public void onRemove() {
-        manager.stop(previewSound);
-        manager.stop(shudderSound);
+        stopSounds();
     }
 
     // Prevents preview/craft sounds from playing in the main menu
     @Override
     public void onChunkUnloaded() {
-        manager.stop(previewSound);
-        manager.stop(shudderSound);
+        stopSounds();
         super.onChunkUnloaded();
+    }
+
+    private void stopSounds() {
+        if (level instanceof ServerLevel sl) {
+            PacketDistributor.sendToPlayersInDimension(sl, new MBSoundHandlerPacket(this.getBlockPos(), 5, "null", false));
+        }
     }
 }

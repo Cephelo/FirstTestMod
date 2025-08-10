@@ -60,7 +60,7 @@ public class ModBlocks {
             () -> new MusicboxBlock(BlockBehaviour.Properties.of()
                     .noOcclusion()
                     .sound(SoundType.NETHERITE_BLOCK)
-                    .strength(12f, 1200f)
+                    .strength(6f, 1200f)
             ));
 
     public static final DeferredBlock<Block> CHISELED_CHORUS_BLOCK = registerBlock("chiseled_chorus_block", () -> new Block(BlockBehaviour.Properties.of()

@@ -4,6 +4,7 @@ import dev.cephelo.musicbox.block.ModBlocks;
 import dev.cephelo.musicbox.block.entity.ModBlockEntities;
 import dev.cephelo.musicbox.block.entity.renderer.PedestalBlockEntityRenderer;
 import dev.cephelo.musicbox.handler.MBClickButtonPacket;
+import dev.cephelo.musicbox.handler.MBSoundHandlerPacket;
 import dev.cephelo.musicbox.handler.MBToggleButtonPacket;
 import dev.cephelo.musicbox.item.ModCreativeModTab;
 import dev.cephelo.musicbox.item.ModItems;
@@ -49,6 +50,7 @@ public class MusicBoxMod {
         // Register the commonSetup method for modloading
         modEventBus.addListener(this::commonSetup);
 
+
         // Register ourselves for server and other game events we are interested in.
         // Note that this is necessary if and only if we want *this* class (ExampleMod) to respond directly to events.
         // Do not add this line if there are no @SubscribeEvent-annotated functions in this class, like onServerStarting() below.
@@ -66,6 +68,7 @@ public class MusicBoxMod {
 
         // Register the item to a creative tab
         modEventBus.addListener(this::addCreative);
+        modEventBus.addListener(this::onRegisterPayloads);
 
         // Register our mod's ModConfigSpec so that FML can create and load the config file for us
         modContainer.registerConfig(ModConfig.Type.COMMON, Config.SPEC);
@@ -124,6 +127,35 @@ public class MusicBoxMod {
 //        LOGGER.info("HELLO from server starting");
     }
 
+    //@SubscribeEvent // on the mod event bus
+    public void onRegisterPayloads(final RegisterPayloadHandlersEvent event) {
+        final PayloadRegistrar registrar = event.registrar("1");
+        registrar.playToServer(
+                MBClickButtonPacket.TYPE,
+                MBClickButtonPacket.STREAM_CODEC,
+                new DirectionalPayloadHandler<>(
+                        MBClickButtonPacket::handle,
+                        MBClickButtonPacket::handle
+                )
+        );
+        registrar.playToClient(
+                MBToggleButtonPacket.TYPE,
+                MBToggleButtonPacket.STREAM_CODEC,
+                new DirectionalPayloadHandler<>(
+                        MBToggleButtonPacket::handle,
+                        MBToggleButtonPacket::handle
+                )
+        );
+        registrar.playToClient(
+                MBSoundHandlerPacket.TYPE,
+                MBSoundHandlerPacket.STREAM_CODEC,
+                new DirectionalPayloadHandler<>(
+                        MBSoundHandlerPacket::handle,
+                        MBSoundHandlerPacket::handle
+                )
+        );
+    }
+
     // You can use EventBusSubscriber to automatically register all static methods in the class annotated with @SubscribeEvent
     @EventBusSubscriber(modid = MusicBoxMod.MODID, value = Dist.CLIENT)
     static class ClientModEvents {
@@ -144,29 +176,6 @@ public class MusicBoxMod {
         @SubscribeEvent
         public static void registerScreens(RegisterMenuScreensEvent event) {
             event.register(ModMenuTypes.MUSICBOX_MENU.get(), MusicboxScreen::new);
-        }
-
-        @SubscribeEvent // on the mod event bus
-        public static void register(final RegisterPayloadHandlersEvent event) {
-            final PayloadRegistrar registrar = event.registrar("1");
-            registrar.playToServer(
-                    MBClickButtonPacket.TYPE,
-                    MBClickButtonPacket.STREAM_CODEC,
-                    new DirectionalPayloadHandler<>(
-                            MBClickButtonPacket::handle,
-                            MBClickButtonPacket::handle
-                    )
-            );
-
-            final PayloadRegistrar registrar2 = event.registrar("2");
-            registrar2.playToServer(
-                    MBToggleButtonPacket.TYPE,
-                    MBToggleButtonPacket.STREAM_CODEC,
-                    new DirectionalPayloadHandler<>(
-                            MBToggleButtonPacket::handle,
-                            MBToggleButtonPacket::handle
-                    )
-            );
         }
     }
 

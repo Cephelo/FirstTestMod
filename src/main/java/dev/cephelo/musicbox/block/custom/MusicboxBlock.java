@@ -1,10 +1,8 @@
 package dev.cephelo.musicbox.block.custom;
 
 import com.mojang.serialization.MapCodec;
-import dev.cephelo.musicbox.Config;
 import dev.cephelo.musicbox.block.entity.MusicboxBlockEntity;
 import dev.cephelo.musicbox.block.entity.ModBlockEntities;
-import dev.cephelo.musicbox.handler.MBClickButtonPacket;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
@@ -25,13 +23,10 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.phys.BlockHitResult;
-import net.neoforged.neoforge.network.PacketDistributor;
 import org.jetbrains.annotations.Nullable;
 
 public class MusicboxBlock extends BaseEntityBlock {
     public static final MapCodec<MusicboxBlock> CODEC = simpleCodec(MusicboxBlock::new);
-
-    private boolean shouldTrigger = false;
 
     public static final EnumProperty<MusicboxStatus> STATUS = EnumProperty.create("status", MusicboxStatus.class);
     public static final BooleanProperty BEACON = BooleanProperty.create("beacon_powered");
@@ -103,16 +98,12 @@ public class MusicboxBlock extends BaseEntityBlock {
     }
 
     // neighborChanged triggers twice (once from setBlockAndUpdate, once from tick) under certain conditions???
-    // shouldTrigger is here to prevent the sound from playing twice incorrectly
     @Override
     protected void neighborChanged(BlockState state, Level level, BlockPos pos, Block block, BlockPos fromPos, boolean isMoving) {
-        shouldTrigger = !shouldTrigger;
-
-        int threshold = Config.MUSICBOX_REDSTONE_CRAFT_THRESHOLD.get();
-
-        if (level.hasNeighborSignal(pos) && shouldTrigger)
-            PacketDistributor.sendToServer(new MBClickButtonPacket(pos, level.getDirectSignalTo(pos) >= threshold ? 1 : 0));
-        if (level.getDirectSignalTo(pos) >= threshold) shouldTrigger = false; // somehow doesn't happen when crafting
+        if (level.hasNeighborSignal(pos)) {
+            MusicboxBlockEntity be = ((MusicboxBlockEntity)level.getBlockEntity(pos));
+            if (be != null) be.handleButtonPress(1);
+        }
     }
 
     // Comparator output

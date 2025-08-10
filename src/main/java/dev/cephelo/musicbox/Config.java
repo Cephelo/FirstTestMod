@@ -17,10 +17,6 @@ public class Config {
             .comment("\n Minimum redstone signal strength for Murichorum Lamp to sing on random tick while lit")
             .defineInRange("lampSingStrength", 15, 1, 15);
 
-    public static final ModConfigSpec.IntValue MUSICBOX_REDSTONE_CRAFT_THRESHOLD = BUILDER
-            .comment("\n Minimum redstone signal input to attempt a craft instead of playing a preview")
-            .defineInRange("musicboxRedstoneCraftThreshold", 12, 1, 15);
-
     public static final ModConfigSpec.BooleanValue MUSICBOX_PREVIEW_SPEEDUP = BUILDER
             .comment("\n Whether the Music Box should speed up the sound it plays while playing its Preview")
             .define("musicboxPreviewSoundSpeedup", false);
