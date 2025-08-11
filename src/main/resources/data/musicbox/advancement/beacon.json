@@ -1,0 +1,45 @@
+{
+  "parent": "musicbox:musicbox",
+  "criteria": {
+    "amethyst": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [{
+            "items": "minecraft:budding_amethyst"
+          }]
+      }
+    },  
+    "beacon": {
+      "conditions": {
+        "level": 4
+      },
+      "trigger": "minecraft:construct_beacon"
+    },
+    "musicbox": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [{
+            "items": "musicbox:musicbox"
+          }]
+      }
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.musicbox.beacon.desc"
+    },
+    "frame": "challenge",
+    "icon": {
+      "id": "musicbox:musicbox"
+    },
+    "title": {
+      "translate": "advancements.musicbox.beacon.title"
+    }
+  },
+  "rewards": {
+    "experience": 300
+  },
+  "requirements": [
+    ["amethyst"], ["beacon"], ["musicbox"]
+  ]
+}

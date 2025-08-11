@@ -1,0 +1,30 @@
+{
+  "parent": "musicbox:chorus",
+  "criteria": {
+    "obtain_lamp": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [{
+            "items": "musicbox:chorus_lamp"
+          }]
+      }
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.musicbox.lamp.desc"
+    },
+    "frame": "goal",
+    "icon": {
+      "id": "musicbox:chorus_lamp"
+    },
+    "title": {
+      "translate": "advancements.musicbox.lamp.title"
+    }
+  },
+  "requirements": [
+    [
+      "obtain_lamp"
+    ]
+  ]
+}

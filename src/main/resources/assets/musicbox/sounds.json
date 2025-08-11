@@ -117,5 +117,93 @@
         "pitch": 1.2
       }
     ]
+  },
+  "chorus_block_break": {
+    "subtitle": "subtitles.block.generic.break",
+    "sounds": [
+      {
+        "name": "block.amethyst_cluster.break",
+        "type": "event"
+      }
+    ]
+  },
+  "chorus_block_step": {
+    "subtitle": "subtitles.block.generic.footsteps",
+    "sounds": [
+      {
+        "name": "block.amethyst_cluster.step",
+        "type": "event"
+      }
+    ]
+  },
+  "chorus_block_place": {
+    "subtitle": "subtitles.block.generic.place",
+    "sounds": [
+      {
+        "name": "block.amethyst_cluster.place",
+        "type": "event"
+      }
+    ]
+  },
+  "chorus_block_hit": {
+    "subtitle": "subtitles.block.generic.hit",
+    "sounds": [
+      {
+        "name": "block.amethyst_cluster.hit",
+        "type": "event"
+      }
+    ]
+  },
+  "chorus_block_fall": {
+    "sounds": [
+      {
+        "name": "block.amethyst_cluster.fall",
+        "type": "event"
+      }
+    ]
+  },
+  "chorus_lamp_break": {
+    "subtitle": "subtitles.block.generic.break",
+    "sounds": [
+      {
+        "name": "block.copper_bulb.break",
+        "type": "event"
+      }
+    ]
+  },
+  "chorus_lamp_step": {
+    "subtitle": "subtitles.block.generic.footsteps",
+    "sounds": [
+      {
+        "name": "block.copper_bulb.step",
+        "type": "event"
+      }
+    ]
+  },
+  "chorus_lamp_place": {
+    "subtitle": "subtitles.block.generic.place",
+    "sounds": [
+      {
+        "name": "block.copper_bulb.place",
+        "type": "event"
+      }
+    ]
+  },
+  "chorus_lamp_hit": {
+    "subtitle": "subtitles.block.generic.hit",
+    "sounds": [
+      {
+        "name": "block.copper_bulb.hit",
+        "type": "event"
+      }
+    ]
+  },
+  "chorus_lamp_fall": {
+    "sounds": [
+      {
+        "name": "block.copper_bulb.fall",
+        "type": "event"
+      }
+    ]
   }
 }

@@ -1,0 +1,30 @@
+{
+  "parent": "musicbox:root",
+  "criteria": {
+    "obtain_parchment": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [{
+            "items": "musicbox:old_parchment"
+          }]
+      }
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.musicbox.parchment.desc"
+    },
+    "frame": "task",
+    "icon": {
+      "id": "musicbox:old_parchment"
+    },
+    "title": {
+      "translate": "advancements.musicbox.parchment.title"
+    }
+  },
+  "requirements": [
+    [
+      "obtain_parchment"
+    ]
+  ]
+}

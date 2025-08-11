@@ -37,5 +37,18 @@
   "sounds.musicbox.paper_flip": "Parchment flips",
   "jeitooltip.musicbox.beacon": "Requires Beacon",
   "jeitooltip.musicbox.consumed": "Item Consumed",
-  "jeitooltip.musicbox.not_consumed": "Item Not Consumed"
+  "jeitooltip.musicbox.not_consumed": "Item Not Consumed",
+  "advancements.musicbox.root": "A Music Box",
+  "advancements.musicbox.parchment.title": "Ancient Knowledge",
+  "advancements.musicbox.parchment.desc": "Find an Old Parchment in an Ancient City Chest",
+  "advancements.musicbox.crystal.title": "Altered Silicon",
+  "advancements.musicbox.crystal.desc": "Find an Echothyst Shard in an End City Chest",
+  "advancements.musicbox.chorus.title": "Ghostly Choir",
+  "advancements.musicbox.chorus.desc": "Find Murichorum Ore from beneath a Chorus Plant",
+  "advancements.musicbox.lamp.title": "Ghostly Glow",
+  "advancements.musicbox.lamp.desc": "Obtain a Murichorum Lamp",
+  "advancements.musicbox.musicbox.title": "Recomposition",
+  "advancements.musicbox.musicbox.desc": "Obtain a Music Box",
+  "advancements.musicbox.beacon.title": "Illumination",
+  "advancements.musicbox.beacon.desc": "Use a Music Box powered by a full Beacon to create Budding Amethyst"
 }

@@ -1,0 +1,36 @@
+{
+  "criteria": {
+    "ow": {
+      "trigger": "minecraft:changed_dimension",
+      "conditions": {
+        "to": "minecraft:overworld"
+      }
+    },
+    "te": {
+      "trigger": "minecraft:changed_dimension",
+      "conditions": {
+        "to": "minecraft:the_end"
+      }
+    }
+  },
+  "display": {
+    "background": "musicbox:textures/gui/advancements/background.png",
+    "description": {
+      "translate": "advancements.musicbox.root"
+    },
+    "frame": "task",
+    "icon": {
+      "id": "musicbox:musicbox"
+    },
+    "title": {
+      "translate": "advancements.musicbox.root"
+    },
+    "show_toast": false,
+    "announce_to_chat": false
+  },
+  "requirements": [
+    [
+      "ow", "te"
+    ]
+  ]
+}

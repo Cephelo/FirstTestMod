@@ -1,0 +1,30 @@
+{
+  "parent": "musicbox:crystal",
+  "criteria": {
+    "obtain_chorus": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [{
+            "items": "#musicbox:chorus_advancement_trigger"
+          }]
+      }
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.musicbox.chorus.desc"
+    },
+    "frame": "task",
+    "icon": {
+      "id": "musicbox:chorus_ore"
+    },
+    "title": {
+      "translate": "advancements.musicbox.chorus.title"
+    }
+  },
+  "requirements": [
+    [
+      "obtain_chorus"
+    ]
+  ]
+}

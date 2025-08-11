@@ -1,0 +1,30 @@
+{
+  "parent": "musicbox:parchment",
+  "criteria": {
+    "obtain_crystal": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [{
+            "items": "musicbox:crystal_shard"
+          }]
+      }
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.musicbox.crystal.desc"
+    },
+    "frame": "task",
+    "icon": {
+      "id": "musicbox:crystal_shard"
+    },
+    "title": {
+      "translate": "advancements.musicbox.crystal.title"
+    }
+  },
+  "requirements": [
+    [
+      "obtain_crystal"
+    ]
+  ]
+}

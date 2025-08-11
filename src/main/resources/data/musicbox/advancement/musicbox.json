@@ -1,0 +1,30 @@
+{
+  "parent": "musicbox:chorus",
+  "criteria": {
+    "obtain_musicbox": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [{
+            "items": "musicbox:musicbox"
+          }]
+      }
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.musicbox.musicbox.desc"
+    },
+    "frame": "task",
+    "icon": {
+      "id": "musicbox:musicbox"
+    },
+    "title": {
+      "translate": "advancements.musicbox.musicbox.title"
+    }
+  },
+  "requirements": [
+    [
+      "obtain_musicbox"
+    ]
+  ]
+}

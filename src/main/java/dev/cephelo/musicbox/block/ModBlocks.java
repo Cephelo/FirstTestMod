@@ -6,6 +6,7 @@ import dev.cephelo.musicbox.block.custom.ChorusOreBlock;
 import dev.cephelo.musicbox.block.custom.MusicboxBlock;
 import dev.cephelo.musicbox.block.custom.PedestalBlock;
 import dev.cephelo.musicbox.item.ModItems;
+import dev.cephelo.musicbox.sound.ModSounds;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.*;
@@ -23,7 +24,7 @@ import java.util.function.ToIntFunction;
 
 public class ModBlocks {
     public static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks(MusicBoxMod.MODID);
-    private static final SoundType chorusSoundType = SoundType.AMETHYST_CLUSTER;
+    private static final SoundType chorusSoundType = ModSounds.CHORUS_BLOCK_SOUNDS;//SoundType.AMETHYST_CLUSTER;
 
     public static final DeferredBlock<Block> CHORUS_BLOCK = registerBlock("chorus_block", () -> new Block(BlockBehaviour.Properties.of()
             .sound(chorusSoundType)
@@ -33,7 +34,7 @@ public class ModBlocks {
     ));
 
     public static final DeferredBlock<Block> RAW_CHORUS_BLOCK = registerBlock("raw_chorus_block", () -> new Block(BlockBehaviour.Properties.of()
-            .sound(SoundType.AMETHYST_CLUSTER)
+            .sound(chorusSoundType)
             .strength(4f, 6f)
             .requiresCorrectToolForDrops()
             .instrument(NoteBlockInstrument.FLUTE)
@@ -96,6 +97,7 @@ public class ModBlocks {
                     .noOcclusion()
                     .strength(4f, 4f)
                     .requiresCorrectToolForDrops()
+                    .sound(chorusSoundType)
             ));
 
     public static final DeferredBlock<TrapDoorBlock> CHORUS_TRAPDOOR = registerBlock("chorus_trapdoor",
@@ -103,19 +105,20 @@ public class ModBlocks {
                     .noOcclusion()
                     .strength(4f, 4f)
                     .requiresCorrectToolForDrops()
+                    .sound(chorusSoundType)
             ));
 
     public static final DeferredBlock<Block> CHORUS_LAMP = registerBlock("chorus_lamp",
             () -> new ChorusLampBlock(BlockBehaviour.Properties.of()
                     .lightLevel(litBlockEmission(15))
-                    .sound(SoundType.COPPER_BULB)
+                    .sound(ModSounds.CHORUS_LAMP_SOUNDS)
                     .strength(4f, 6f)
                     .requiresCorrectToolForDrops()
                     .randomTicks()
     ));
 
     public static final DeferredBlock<Block> CRYSTAL_BLOCK = registerBlock("crystal_block", () -> new AmethystBlock(BlockBehaviour.Properties.of()
-            .sound(SoundType.AMETHYST_CLUSTER)
+            .sound(SoundType.AMETHYST)
             .strength(2f, 3f)
             .requiresCorrectToolForDrops()
             .instrument(NoteBlockInstrument.CHIME)
